@@ -1,16 +1,16 @@
 <div class="news-container">
   <h1>Hacker News Top Stories</h1>
   
-  <div *ngIf="loading" class="loading">
+  <div *ngIf="loading()" class="loading">
     Loading stories...
   </div>
 
-  <div *ngIf="error" class="error">
-    {{ error }}
+  <div *ngIf="error()" class="error">
+    {{ error() }}
   </div>
 
-  <div *ngIf="!loading && !error" class="stories-list">
-    <article *ngFor="let story of stories" class="story-card">
+  <div *ngIf="!loading() && !error()" class="stories-list">
+    <article *ngFor="let story of stories()" class="story-card">
       <h2>
         <a [href]="story.url" target="_blank" rel="noopener">{{ story.title }}</a>
       </h2>

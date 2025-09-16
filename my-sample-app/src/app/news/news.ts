@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HackerNews, Story } from '../services/hacker-news';
 
@@ -10,9 +10,9 @@ import { HackerNews, Story } from '../services/hacker-news';
   styleUrl: './news.scss'
 })
 export class NewsComponent implements OnInit {
-  stories: Story[] = [];
-  loading = true;
-  error: string | null = null;
+  stories = signal<Story[]>([]);
+  loading = signal(true);
+  error = signal<string | null>(null);
 
   constructor(private hackerNewsService: HackerNews) {}
 
@@ -21,19 +21,21 @@ export class NewsComponent implements OnInit {
   }
 
   loadStories() {
-    this.loading = true;
-    this.error = null;
+    this.loading.set(true);
+    this.error.set(null);
+    console.log('Loading stories...');
     
     this.hackerNewsService.getTopStories(20)
       .subscribe({
         next: (stories) => {
-          this.stories = stories;
-          this.loading = false;
+          console.log('Stories received:', stories);
+          this.stories.set(stories);
+          this.loading.set(false);
         },
         error: (err) => {
-          this.error = 'Failed to load stories. Please try again later.';
-          this.loading = false;
           console.error('Error loading stories:', err);
+          this.error.set('Failed to load stories. Please try again later.');
+          this.loading.set(false);
         }
       });
   }
