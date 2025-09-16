@@ -1,0 +1,39 @@
+.welcome-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    text-align: center;
+    
+    h1 {
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .features {
+        margin-top: 2rem;
+        text-align: left;
+        
+        h2 {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+
+            li {
+                margin: 0.5rem 0;
+                padding-left: 1.5rem;
+                position: relative;
+
+                &:before {
+                    content: "✓";
+                    position: absolute;
+                    left: 0;
+                    color: #4CAF50;
+                }
+            }
+        }
+    }
+}
