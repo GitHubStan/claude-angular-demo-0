@@ -1,17 +1,23 @@
+@use '../styles/colors' as *;
+@use '../styles/layout' as *;
+@use '../styles/typography' as *;
+@use '../styles/animations' as *;
+@use '../styles/effects' as *;
+
 .main-nav {
   background-color: $background-primary;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: $shadow-sm;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: $z-index-nav;
 }
 
 .nav-content {
-  max-width: 1200px;
+  max-width: $container-lg;
   margin: 0 auto;
-  padding: 1rem;
+  padding: $spacing-sm;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,8 +26,8 @@
 .nav-brand {
   color: $brand-secondary;
   text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
   
   &:hover {
     color: $brand-secondary-dark;
@@ -30,7 +36,7 @@
 
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: $gap-lg;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -38,9 +44,10 @@
   a {
     color: $text-primary;
     text-decoration: none;
-    font-weight: 500;
-    padding: 0.5rem 0;
+    font-weight: $font-weight-medium;
+    padding: $spacing-xs 0;
     position: relative;
+    transition: color $transition-fast $ease-default;
 
     &:hover {
       color: $brand-secondary;

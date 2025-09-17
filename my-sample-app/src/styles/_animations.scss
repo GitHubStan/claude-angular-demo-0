@@ -1,0 +1,9 @@
+// Transition durations
+$transition-fast: 0.2s;
+$transition-normal: 0.3s;
+$transition-slow: 0.5s;
+
+// Transition easings
+$ease-default: ease;
+$ease-in-out: ease-in-out;
+$ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);

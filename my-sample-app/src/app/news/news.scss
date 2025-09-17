@@ -1,5 +1,11 @@
+@use '../../styles/colors' as *;
+@use '../../styles/layout' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/animations' as *;
+@use '../../styles/effects' as *;
+
 .news-container {
-  max-width: 800px;
+  max-width: $container-sm;
   margin: 2rem auto;
   padding: 0 1rem;
 
@@ -28,6 +34,7 @@
 
     &::placeholder {
       color: $text-light;
+    }
   }
 }
 
@@ -110,11 +117,13 @@
       display: flex;
       gap: 1rem;
       color: $text-secondary;
-      font-size: 0.9rem;    span {
-      &:not(:last-child)::after {
-        content: "•";
-        margin-left: 1rem;
+      font-size: 0.9rem;
+
+      span {
+        &:not(:last-child)::after {
+          content: "•";
+          margin-left: 1rem;
+        }
       }
     }
-  }
 }

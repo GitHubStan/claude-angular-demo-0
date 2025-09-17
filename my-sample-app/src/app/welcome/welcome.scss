@@ -1,21 +1,25 @@
 .welcome-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
+    max-width: $container-sm;
+    margin: $spacing-lg auto;
+    padding: $spacing-lg;
     text-align: center;
     
     h1 {
         color: $text-primary;
-        margin-bottom: 1rem;
+        margin-bottom: $spacing-sm;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
     }
 
     .features {
-        margin-top: 2rem;
+        margin-top: $spacing-lg;
         text-align: left;
         
         h2 {
             color: $text-secondary;
-            margin-bottom: 1rem;
+            margin-bottom: $spacing-sm;
+            font-size: $font-size-lg;
+            font-weight: $font-weight-medium;
         }
 
         ul {
@@ -23,8 +27,8 @@
             padding: 0;
 
             li {
-                margin: 0.5rem 0;
-                padding-left: 1.5rem;
+                margin: $spacing-xs 0;
+                padding-left: $spacing-md;
                 position: relative;
 
                 &:before {
@@ -44,13 +48,13 @@
 
     .cta-button {
         display: inline-block;
-        padding: 1rem 2rem;
+        padding: $spacing-sm $spacing-lg;
         background-color: $brand-primary;
         color: $neutral-100;
         text-decoration: none;
-        border-radius: 4px;
-        font-weight: bold;
-        transition: background-color 0.2s ease;
+        border-radius: $border-radius-sm;
+        font-weight: $font-weight-bold;
+        transition: background-color $transition-fast $ease-default;
 
         &:hover {
             background-color: $brand-primary-dark;
