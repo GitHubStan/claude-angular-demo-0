@@ -1,11 +1,12 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HackerNews, Story } from '../services/hacker-news';
 
 @Component({
   selector: 'app-news',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './news.html',
   styleUrl: './news.scss'
 })
@@ -13,6 +14,14 @@ export class NewsComponent implements OnInit {
   stories = signal<Story[]>([]);
   loading = signal(true);
   error = signal<string | null>(null);
+  searchQuery = signal('');
+
+  filteredStories = computed(() => {
+    const query = this.searchQuery().toLowerCase();
+    return query
+      ? this.stories().filter(story => story.title.toLowerCase().includes(query))
+      : this.stories();
+  });
 
   constructor(private hackerNewsService: HackerNews) {}
 
