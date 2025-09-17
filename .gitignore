@@ -36,3 +36,24 @@ typings/
 # System Files
 .DS_Store
 Thumbs.db
+
+# .NET Core / C# build artifacts
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.tmp
+*.log
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Claude settings
+.claude/settings.local.json
