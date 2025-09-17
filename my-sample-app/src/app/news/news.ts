@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HackerNews, Story } from '../services/hacker-news';
@@ -11,6 +11,8 @@ import { HackerNews, Story } from '../services/hacker-news';
   styleUrl: './news.scss'
 })
 export class NewsComponent implements OnInit {
+  private hackerNewsService = inject(HackerNews);
+  
   stories = signal<Story[]>([]);
   loading = signal(true);
   error = signal<string | null>(null);
@@ -25,8 +27,6 @@ export class NewsComponent implements OnInit {
       ? this.stories().filter(story => story.title.toLowerCase().includes(query))
       : this.stories();
   });
-
-  constructor(private hackerNewsService: HackerNews) {}
 
   ngOnInit() {
     this.loadStories();
