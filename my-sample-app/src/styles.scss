@@ -1,8 +1,8 @@
 /* Import design system */
-@import './styles/colors';
-@import './styles/layout';
-@import './styles/typography';
-@import './styles/animations';
-@import './styles/effects';
+@use './styles/colors' as *;
+@use './styles/layout' as *;
+@use './styles/typography' as *;
+@use './styles/animations' as *;
+@use './styles/effects' as *;
 
 /* You can add global styles to this file, and also import other style files */

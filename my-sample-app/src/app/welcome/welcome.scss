@@ -1,3 +1,9 @@
+@use '../../styles/colors' as *;
+@use '../../styles/layout' as *;
+@use '../../styles/typography' as *;
+@use '../../styles/animations' as *;
+@use '../../styles/effects' as *;
+
 .welcome-container {
     max-width: $container-sm;
     margin: $spacing-lg auto;
