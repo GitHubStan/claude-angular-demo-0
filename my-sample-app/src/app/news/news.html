@@ -11,25 +11,25 @@
     >
   </div>
   
-  <div *ngIf="loading()" class="loading">
-    Loading stories...
-  </div>
-
-  <div *ngIf="error()" class="error">
-    {{ error() }}
-  </div>
-
-  <div *ngIf="!loading() && !error()" class="stories-list">
-    <article *ngFor="let story of filteredStories()" class="story-card">
-      <h2>
-        <a [href]="story.url" target="_blank" rel="noopener">{{ story.title }}</a>
-      </h2>
-      <div class="story-meta">
-        <span>{{ story.score }} points</span>
-        <span>by {{ story.by }}</span>
-        <span>{{ formatTime(story.time) }}</span>
-        <span>{{ story.descendants }} comments</span>
-      </div>
-    </article>
-  </div>
+  @if (loading()) {
+    <div class="loading">Loading stories...</div>
+  } @else if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else {
+    <div class="stories-list">
+      @for (story of filteredStories(); track story.id) {
+        <article class="story-card">
+          <h2>
+            <a [href]="story.url" target="_blank" rel="noopener">{{ story.title }}</a>
+          </h2>
+          <div class="story-meta">
+            <span>{{ story.score }} points</span>
+            <span>by {{ story.by }}</span>
+            <span>{{ formatTime(story.time) }}</span>
+            <span>{{ story.descendants }} comments</span>
+          </div>
+        </article>
+      }
+    </div>
+  }
 </div>
