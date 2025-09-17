@@ -18,6 +18,7 @@ export interface Story {
 })
 export class HackerNews {
   private baseUrl = 'https://hacker-news.firebaseio.com/v0';
+  private storyIds: number[] | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -26,23 +27,42 @@ export class HackerNews {
     return throwError(() => new Error('Something went wrong; please try again later.'));
   }
 
-  getTopStories(limit: number = 10): Observable<Story[]> {
-    console.log('Fetching top stories...');
+  getTopStories(pageSize: number = 10, page: number = 1): Observable<Story[]> {
+    console.log(`Fetching top stories for page ${page} with size ${pageSize}...`);
+    
+    const getStoriesPage = (ids: number[]) => {
+      const start = (page - 1) * pageSize;
+      const end = start + pageSize;
+      console.log(`Slicing IDs from ${start} to ${end}`);
+      const pageIds = ids.slice(start, end);
+      return this.getStoriesDetails(pageIds);
+    };
+
+    if (this.storyIds) {
+      console.log('Using cached story IDs');
+      return getStoriesPage(this.storyIds);
+    }
+
     return this.http.get<number[]>(`${this.baseUrl}/topstories.json`)
       .pipe(
         map(ids => {
           if (!ids || !Array.isArray(ids)) {
             throw new Error('Invalid response format for story IDs');
           }
-          console.log('Got story IDs:', ids.slice(0, limit));
-          return ids.slice(0, limit);
+          this.storyIds = ids;
+          console.log(`Got ${ids.length} story IDs`);
+          return ids;
         }),
         switchMap(ids => {
           console.log('Fetching story details...');
-          return this.getStoriesDetails(ids);
+          return getStoriesPage(ids);
         }),
         catchError(this.handleError)
       );
+  }
+
+  getTotalPages(pageSize: number = 10): number {
+    return this.storyIds ? Math.ceil(this.storyIds.length / pageSize) : 0;
   }
 
   private getStoriesDetails(ids: number[]): Observable<Story[]> {

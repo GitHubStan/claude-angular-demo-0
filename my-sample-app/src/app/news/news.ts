@@ -15,6 +15,9 @@ export class NewsComponent implements OnInit {
   loading = signal(true);
   error = signal<string | null>(null);
   searchQuery = signal('');
+  currentPage = signal(1);
+  pageSize = signal(10);
+  totalPages = signal(0);
 
   filteredStories = computed(() => {
     const query = this.searchQuery().toLowerCase();
@@ -34,12 +37,13 @@ export class NewsComponent implements OnInit {
     this.error.set(null);
     console.log('Loading stories...');
     
-    this.hackerNewsService.getTopStories(20)
+    this.hackerNewsService.getTopStories(this.pageSize(), this.currentPage())
       .subscribe({
         next: (stories) => {
           console.log('Stories received:', stories);
           this.stories.set(stories);
           this.loading.set(false);
+          this.totalPages.set(this.hackerNewsService.getTotalPages(this.pageSize()));
         },
         error: (err) => {
           console.error('Error loading stories:', err);
@@ -52,5 +56,26 @@ export class NewsComponent implements OnInit {
   formatTime(timestamp: number): string {
     const date = new Date(timestamp * 1000);
     return date.toLocaleString();
+  }
+
+  nextPage() {
+    if (this.currentPage() < this.totalPages()) {
+      this.currentPage.set(this.currentPage() + 1);
+      this.loadStories();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage() > 1) {
+      this.currentPage.set(this.currentPage() - 1);
+      this.loadStories();
+    }
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage.set(page);
+      this.loadStories();
+    }
   }
 }

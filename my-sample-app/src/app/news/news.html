@@ -31,5 +31,27 @@
         </article>
       }
     </div>
+
+    <div class="pagination">
+      <button 
+        class="page-button"
+        [disabled]="currentPage() === 1"
+        (click)="previousPage()"
+      >
+        Previous
+      </button>
+      
+      <span class="page-info">
+        Page {{ currentPage() }} of {{ totalPages() }}
+      </span>
+
+      <button 
+        class="page-button"
+        [disabled]="currentPage() === totalPages()"
+        (click)="nextPage()"
+      >
+        Next
+      </button>
+    </div>
   }
 </div>
