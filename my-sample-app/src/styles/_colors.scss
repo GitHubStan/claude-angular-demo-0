@@ -1,0 +1,29 @@
+// Brand Colors
+$brand-primary: #ff6600;
+$brand-primary-dark: #e65c00;
+$brand-secondary: #1976d2;
+$brand-secondary-dark: #1565c0;
+$brand-success: #4CAF50;
+$brand-danger: #dc3545;
+
+// Neutral Colors
+$neutral-100: #fff;
+$neutral-200: #f8f9fa;
+$neutral-300: #ddd;
+$neutral-400: #ccc;
+$neutral-500: #aaa;
+$neutral-600: #666;
+$neutral-700: #333;
+$neutral-800: #2c3e50;
+
+// Semantic Colors
+$text-primary: $neutral-700;
+$text-secondary: $neutral-600;
+$text-light: $neutral-500;
+$text-link: $brand-secondary;
+$text-link-hover: $brand-secondary-dark;
+
+$background-primary: $neutral-100;
+$background-secondary: $neutral-200;
+
+$border-light: $neutral-300;

@@ -4,7 +4,7 @@
   padding: 0 1rem;
 
   h1 {
-    color: #ff6600;
+    color: $brand-primary;
     margin-bottom: 2rem;
     text-align: center;
   }
@@ -17,18 +17,17 @@
     width: 100%;
     padding: 0.8rem 1rem;
     font-size: 1rem;
-    border: 2px solid #ddd;
+    border: 2px solid $border-light;
     border-radius: 8px;
     outline: none;
     transition: border-color 0.2s ease;
 
     &:focus {
-      border-color: #ff6600;
+      border-color: $brand-primary;
     }
 
     &::placeholder {
-      color: #aaa;
-    }
+      color: $text-light;
   }
 }
 
@@ -39,7 +38,7 @@
 }
 
 .error {
-  color: #dc3545;
+  color: $brand-danger;
 }
 
 .stories-list {
@@ -60,30 +59,30 @@
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 4px;
-    background-color: #ff6600;
-    color: white;
+    background-color: $brand-primary;
+    color: $neutral-100;
     cursor: pointer;
     font-size: 0.9rem;
     transition: background-color 0.2s ease;
 
     &:hover:not(:disabled) {
-      background-color: #e65c00;
+      background-color: $brand-primary-dark;
     }
 
     &:disabled {
-      background-color: #ccc;
+      background-color: $neutral-400;
       cursor: not-allowed;
     }
   }
 
   .page-info {
-    color: #666;
+    color: $text-secondary;
     font-size: 0.9rem;
   }
 }
 
 .story-card {
-  background: #f8f9fa;
+  background: $background-secondary;
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -93,27 +92,25 @@
     transform: translateY(-2px);
   }
 
-  h2 {
-    margin: 0 0 1rem;
-    font-size: 1.2rem;
-    
-    a {
-      color: #2c3e50;
-      text-decoration: none;
+    h2 {
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
       
-      &:hover {
-        color: #ff6600;
+      a {
+        color: $neutral-800;
+        text-decoration: none;
+        
+        &:hover {
+          color: $brand-primary;
+        }
       }
     }
-  }
 
-  .story-meta {
-    display: flex;
-    gap: 1rem;
-    color: #666;
-    font-size: 0.9rem;
-
-    span {
+    .story-meta {
+      display: flex;
+      gap: 1rem;
+      color: $text-secondary;
+      font-size: 0.9rem;    span {
       &:not(:last-child)::after {
         content: "•";
         margin-left: 1rem;
