@@ -36,14 +36,24 @@ export class NewsComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
     console.log('Loading stories...');
-    
+
     this.hackerNewsService.getTopStories(this.pageSize(), this.currentPage())
       .subscribe({
         next: (stories) => {
           console.log('Stories received:', stories);
           this.stories.set(stories);
           this.loading.set(false);
-          this.totalPages.set(this.hackerNewsService.getTotalPages(this.pageSize()));
+
+          // Get total pages separately
+          this.hackerNewsService.getTotalPages(this.pageSize())
+            .subscribe({
+              next: (totalPages) => {
+                this.totalPages.set(totalPages);
+              },
+              error: (err) => {
+                console.error('Error getting total pages:', err);
+              }
+            });
         },
         error: (err) => {
           console.error('Error loading stories:', err);
