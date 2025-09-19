@@ -12,7 +12,7 @@
     text-align: center;
 
     h1 {
-        color: var(--color-text-primary, #000000);
+        color: var(--color-background-primary-contrast, #000000);
         margin-bottom: 1.5rem;
         font-size: $font-size-hero;
         font-weight: $font-weight-semibold;
@@ -22,7 +22,7 @@
 
     p {
         font-size: $font-size-lg;
-        color: var(--color-text-secondary, #6c757d);
+        color: var(--color-background-primary-contrast, #6c757d);
         margin-bottom: 2rem;
         line-height: $line-height-base;
     }
@@ -98,27 +98,22 @@
 [data-theme="colorful"] {
     .welcome-container {
         .features {
-            background: linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%);
+            background: var(--color-background-tertiary);
+            box-shadow: 0 8px 24px $color-shadow-nextech;
+            border: 1px solid var(--color-border);
 
-            &:before {
-                content: '🎉';
-                position: absolute;
-                top: -10px;
-                right: -10px;
-                font-size: 2rem;
-                z-index: 1;
+            h2 {
+                color: $color-nextech-text-on-card !important;
             }
 
-            position: relative;
-        }
+            li {
+                color: $color-nextech-text-on-card !important;
+                border-bottom-color: var(--color-border);
 
-        h1 {
-            background: linear-gradient(45deg, var(--color-primary), var(--color-secondary), var(--color-accent));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease-in-out infinite;
+                &:before {
+                    color: var(--color-secondary) !important;
+                }
+            }
         }
     }
 }

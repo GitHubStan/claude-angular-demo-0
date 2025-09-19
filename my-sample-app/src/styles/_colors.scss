@@ -34,7 +34,16 @@ $color-background-secondary: $color-neutral-200;
 
 $color-border-light: $color-neutral-300;
 
+// Nextech-inspired theme colors
+$color-nextech-bg: #607b8c;             // Main background for Nextech theme
+$color-nextech-card-bg: #ffffff;        // Card background for Nextech theme
+$color-nextech-text-on-bg: #ffffff;     // White text for colored backgrounds
+$color-nextech-text-on-card: #000000;   // Dark text for white card backgrounds
+$color-nextech-border: #e9ecef;         // Border color for light theme
+
 // Shadow Colors
 $color-shadow-light-white: rgba(255, 255, 255, 0.1);         // Light white shadow for dark themes
+$color-shadow-nextech: rgba(0, 0, 0, 0.3);                   // Clean shadow for Nextech theme
+$color-shadow-nextech-elevated: rgba(0, 0, 0, 0.5);          // Elevated shadow for Nextech theme
 $color-shadow-colorful-primary: rgba(253, 203, 110, 0.3);    // Colorful theme primary shadow
 $color-shadow-colorful-hover: rgba(253, 203, 110, 0.4);      // Colorful theme hover shadow
