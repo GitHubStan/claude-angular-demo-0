@@ -4,7 +4,7 @@
 @use '../../styles/animations' as *;
 @use '../../styles/effects' as *;
 
-// Nextech-inspired welcome page
+// Theme-aware welcome page
 .welcome-container {
     max-width: 800px;
     margin: 3rem auto;
@@ -12,17 +12,17 @@
     text-align: center;
 
     h1 {
-        color: $text-primary;
+        color: var(--color-text-primary, #000000);
         margin-bottom: 1.5rem;
         font-size: $font-size-hero;
         font-weight: $font-weight-semibold;
         line-height: $line-height-tight;
-        font-family: $font-family-base;
+        font-family: var(--font-family);
     }
 
     p {
         font-size: $font-size-lg;
-        color: $text-secondary;
+        color: var(--color-text-secondary, #6c757d);
         margin-bottom: 2rem;
         line-height: $line-height-base;
     }
@@ -30,14 +30,15 @@
     .features {
         margin-top: 3rem;
         text-align: left;
-        background-color: white;
+        background-color: var(--color-background-tertiary, white);
         padding: 2rem;
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        border: 1px solid $border-light;
+        box-shadow: 0 2px 8px var(--color-shadow, rgba(0, 0, 0, 0.1));
+        border: 1px solid var(--color-border, #e9ecef);
+        transition: all 0.3s ease-in-out;
 
         h2 {
-            color: $text-primary;
+            color: var(--color-text-primary, #000000);
             margin-bottom: 1.5rem;
             font-size: $font-size-xxl;
             font-weight: $font-weight-semibold;
@@ -53,7 +54,8 @@
                 padding: 0.75rem 0 0.75rem 2rem;
                 position: relative;
                 font-size: $font-size-base;
-                border-bottom: 1px solid $neutral-300;
+                border-bottom: 1px solid var(--color-border, #e9ecef);
+                color: var(--color-text-primary, #000000);
 
                 &:last-child {
                     border-bottom: none;
@@ -64,7 +66,7 @@
                     position: absolute;
                     left: 0;
                     top: 0.75rem;
-                    color: $brand-secondary;
+                    color: var(--color-secondary, #76a239);
                     font-weight: $font-weight-bold;
                     font-size: 1.2rem;
                 }
@@ -84,4 +86,44 @@
             min-width: 160px;
         }
     }
+}
+
+// Theme-specific welcome page styles
+[data-theme="dark"] {
+    .welcome-container .features {
+        background: linear-gradient(135deg, var(--color-background-tertiary) 0%, var(--color-background-secondary) 100%);
+    }
+}
+
+[data-theme="colorful"] {
+    .welcome-container {
+        .features {
+            background: linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%);
+
+            &:before {
+                content: '🎉';
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                font-size: 2rem;
+                z-index: 1;
+            }
+
+            position: relative;
+        }
+
+        h1 {
+            background: linear-gradient(45deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+    }
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }

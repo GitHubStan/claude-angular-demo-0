@@ -29,3 +29,8 @@ $background-primary: $neutral-100;
 $background-secondary: $neutral-200;
 
 $border-light: $neutral-300;
+
+// Shadow Colors
+$shadow-light-white: rgba(255, 255, 255, 0.1);         // Light white shadow for dark themes
+$shadow-colorful-primary: rgba(253, 203, 110, 0.3);    // Colorful theme primary shadow
+$shadow-colorful-hover: rgba(253, 203, 110, 0.4);      // Colorful theme hover shadow

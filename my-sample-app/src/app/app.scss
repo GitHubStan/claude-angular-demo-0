@@ -4,16 +4,17 @@
 @use '../styles/animations' as *;
 @use '../styles/effects' as *;
 
-// Nextech-inspired navigation
+// Theme-aware navigation using CSS custom properties
 .main-nav {
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-background-primary, white);
+  box-shadow: 0 2px 4px var(--color-shadow, rgba(0, 0, 0, 0.1));
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  border-bottom: 1px solid $border-light;
+  border-bottom: 1px solid var(--color-border, #e9ecef);
+  font-family: var(--font-family);
 }
 
 .nav-content {
@@ -25,15 +26,21 @@
   align-items: center;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
 .nav-brand {
-  color: $brand-primary;
+  color: var(--color-primary, #003b49);
   text-decoration: none;
   font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
-  font-family: $font-family-base;
+  font-family: var(--font-family);
 
   &:hover {
-    color: $brand-primary-dark;
+    color: var(--color-primary-dark, #002935);
   }
 }
 
@@ -45,7 +52,7 @@
   padding: 0;
 
   a {
-    color: $text-primary;
+    color: var(--color-text-primary, #000000);
     text-decoration: none;
     font-weight: $font-weight-normal;
     font-size: $font-size-base;
@@ -54,11 +61,11 @@
     transition: color 0.2s ease-in-out;
 
     &:hover {
-      color: $brand-primary;
+      color: var(--color-primary, #003b49);
     }
 
     &.active {
-      color: $brand-primary;
+      color: var(--color-primary, #003b49);
       font-weight: $font-weight-semibold;
 
       &::after {
@@ -68,17 +75,113 @@
         left: 0;
         right: 0;
         height: 2px;
-        background-color: $brand-primary;
+        background-color: var(--color-primary, #003b49);
       }
     }
   }
 }
 
+// Theme selector dropdown styles
+.theme-selector {
+  position: relative;
+}
+
+.theme-button {
+  background: var(--color-background-tertiary, white);
+  border: 1px solid var(--color-border, #e9ecef);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: var(--color-text-primary, #000000);
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: var(--color-background-secondary, #f8f9fa);
+    border-color: var(--color-primary, #003b49);
+  }
+
+  .dropdown-arrow {
+    transition: transform 0.2s ease-in-out;
+    font-size: 0.8rem;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.theme-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 200px;
+  background: var(--color-background-primary, white);
+  border: 1px solid var(--color-border, #e9ecef);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--color-shadow, rgba(0, 0, 0, 0.1));
+  z-index: 1001;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.theme-option {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-text-primary, #000000);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background: var(--color-background-secondary, #f8f9fa);
+  }
+
+  &.active {
+    background: var(--color-primary, #003b49);
+    color: white;
+  }
+
+  .check-mark {
+    margin-left: auto;
+    font-weight: bold;
+  }
+}
+
+.theme-preview {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border, #e9ecef);
+
+  &[data-theme="professional"] {
+    background: linear-gradient(45deg, #003b49 50%, #76a239 50%);
+  }
+
+  &[data-theme="dark"] {
+    background: linear-gradient(45deg, #4a90e2 50%, #121212 50%);
+  }
+
+  &[data-theme="colorful"] {
+    background: linear-gradient(45deg, #ff6b9d 33%, #4ecdc4 33%, #4ecdc4 66%, #ffd93d 66%);
+  }
+}
+
 .main-content {
-  margin-top: 5rem; // Account for taller nav
+  margin-top: 5rem;
   padding: 2rem;
   min-height: calc(100vh - 5rem);
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  background-color: var(--color-background-primary, white);
 }

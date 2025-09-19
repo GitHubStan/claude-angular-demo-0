@@ -4,15 +4,17 @@
 @use '../../styles/animations' as *;
 @use '../../styles/effects' as *;
 
+// Theme-aware news page
 .news-container {
-  max-width: $container-sm;
+  max-width: 800px;
   margin: 2rem auto;
   padding: 0 1rem;
 
   h1 {
-    color: $brand-primary;
+    color: var(--color-primary, #003b49);
     margin-bottom: 2rem;
     text-align: center;
+    font-family: var(--font-family);
   }
 }
 
@@ -23,17 +25,20 @@
     width: 100%;
     padding: 0.8rem 1rem;
     font-size: 1rem;
-    border: 2px solid $border-light;
+    font-family: var(--font-family);
+    border: 2px solid var(--color-border, #e9ecef);
     border-radius: 8px;
     outline: none;
+    background-color: var(--color-background-primary, white);
+    color: var(--color-text-primary, #000000);
     transition: border-color 0.2s ease;
 
     &:focus {
-      border-color: $brand-primary;
+      border-color: var(--color-primary, #003b49);
     }
 
     &::placeholder {
-      color: $text-light;
+      color: var(--color-text-light, #adb5bd);
     }
   }
 }
@@ -42,10 +47,11 @@
   text-align: center;
   padding: 2rem;
   font-size: 1.2rem;
+  color: var(--color-text-primary, #000000);
 }
 
 .error {
-  color: $brand-danger;
+  color: var(--color-danger, #dc3545);
 }
 
 .stories-list {
@@ -62,68 +68,97 @@
   margin-top: 2rem;
   padding: 1rem 0;
 
-  .page-button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    background-color: $brand-primary;
-    color: $neutral-100;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.2s ease;
-
-    &:hover:not(:disabled) {
-      background-color: $brand-primary-dark;
-    }
-
-    &:disabled {
-      background-color: $neutral-400;
-      cursor: not-allowed;
-    }
-  }
-
   .page-info {
-    color: $text-secondary;
+    color: var(--color-text-secondary, #6c757d);
     font-size: 0.9rem;
+    font-family: var(--font-family);
   }
 }
 
 .story-card {
-  background: $background-secondary;
+  background: var(--color-background-tertiary, white);
   border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+  box-shadow: 0 2px 4px var(--color-shadow, rgba(0, 0, 0, 0.1));
+  border: 1px solid var(--color-border, #e9ecef);
+  transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--color-shadow, rgba(0, 0, 0, 0.15));
   }
 
-    h2 {
-      margin: 0 0 1rem;
-      font-size: 1.2rem;
-      
-      a {
-        color: $neutral-800;
-        text-decoration: none;
-        
-        &:hover {
-          color: $brand-primary;
-        }
+  h2 {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+    font-family: var(--font-family);
+
+    a {
+      color: var(--color-text-primary, #000000);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--color-primary, #003b49);
       }
     }
+  }
 
-    .story-meta {
-      display: flex;
-      gap: 1rem;
-      color: $text-secondary;
-      font-size: 0.9rem;
+  .story-meta {
+    display: flex;
+    gap: 1rem;
+    color: var(--color-text-secondary, #6c757d);
+    font-size: 0.9rem;
+    font-family: var(--font-family);
 
-      span {
-        &:not(:last-child)::after {
-          content: "•";
-          margin-left: 1rem;
-        }
+    span {
+      &:not(:last-child)::after {
+        content: "•";
+        margin-left: 1rem;
       }
     }
+  }
+}
+
+// Theme-specific news page styles
+[data-theme="dark"] {
+  .story-card {
+    &:hover {
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+[data-theme="colorful"] {
+  .story-card {
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+      background-size: 200% 100%;
+      animation: shimmer 2s ease-in-out infinite;
+    }
+
+    &:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 8px 16px var(--color-shadow, rgba(253, 203, 110, 0.3));
+    }
+  }
+
+  .search-box input {
+    &:focus {
+      box-shadow: 0 0 0 3px var(--color-accent, #ffd93d);
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
