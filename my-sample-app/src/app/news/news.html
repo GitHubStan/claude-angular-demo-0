@@ -33,20 +33,20 @@
     </div>
 
     <div class="pagination">
-      <button 
-        class="page-button"
+      <button
+        class="btn btn-secondary"
         [disabled]="currentPage() === 1"
         (click)="previousPage()"
       >
         Previous
       </button>
-      
+
       <span class="page-info">
         Page {{ currentPage() }} of {{ totalPages() }}
       </span>
 
-      <button 
-        class="page-button"
+      <button
+        class="btn btn-primary"
         [disabled]="currentPage() === totalPages()"
         (click)="nextPage()"
       >

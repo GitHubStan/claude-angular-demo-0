@@ -4,28 +4,44 @@
 @use '../../styles/animations' as *;
 @use '../../styles/effects' as *;
 
+// Nextech-inspired welcome page
 .welcome-container {
-    max-width: $container-sm;
-    margin: $spacing-lg auto;
-    padding: $spacing-lg;
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem;
     text-align: center;
-    
+
     h1 {
         color: $text-primary;
-        margin-bottom: $spacing-sm;
-        font-size: $font-size-xl;
-        font-weight: $font-weight-bold;
+        margin-bottom: 1.5rem;
+        font-size: $font-size-hero;
+        font-weight: $font-weight-semibold;
+        line-height: $line-height-tight;
+        font-family: $font-family-base;
+    }
+
+    p {
+        font-size: $font-size-lg;
+        color: $text-secondary;
+        margin-bottom: 2rem;
+        line-height: $line-height-base;
     }
 
     .features {
-        margin-top: $spacing-lg;
+        margin-top: 3rem;
         text-align: left;
-        
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid $border-light;
+
         h2 {
-            color: $text-secondary;
-            margin-bottom: $spacing-sm;
-            font-size: $font-size-lg;
-            font-weight: $font-weight-medium;
+            color: $text-primary;
+            margin-bottom: 1.5rem;
+            font-size: $font-size-xxl;
+            font-weight: $font-weight-semibold;
+            text-align: center;
         }
 
         ul {
@@ -33,37 +49,39 @@
             padding: 0;
 
             li {
-                margin: $spacing-xs 0;
-                padding-left: $spacing-md;
+                margin: 1rem 0;
+                padding: 0.75rem 0 0.75rem 2rem;
                 position: relative;
+                font-size: $font-size-base;
+                border-bottom: 1px solid $neutral-300;
+
+                &:last-child {
+                    border-bottom: none;
+                }
 
                 &:before {
                     content: "✓";
                     position: absolute;
                     left: 0;
-                    color: $brand-success;
+                    top: 0.75rem;
+                    color: $brand-secondary;
+                    font-weight: $font-weight-bold;
+                    font-size: 1.2rem;
                 }
             }
         }
     }
 
     .cta-container {
-        margin-top: 2rem;
+        margin-top: 3rem;
         text-align: center;
-    }
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
 
-    .cta-button {
-        display: inline-block;
-        padding: $spacing-sm $spacing-lg;
-        background-color: $brand-primary;
-        color: $neutral-100;
-        text-decoration: none;
-        border-radius: $border-radius-sm;
-        font-weight: $font-weight-bold;
-        transition: background-color $transition-fast $ease-default;
-
-        &:hover {
-            background-color: $brand-primary-dark;
+        .btn {
+            min-width: 160px;
         }
     }
 }
