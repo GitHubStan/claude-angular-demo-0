@@ -1,10 +1,40 @@
 <nav class="main-nav">
   <div class="nav-content">
     <a routerLink="/" class="nav-brand">My Sample App</a>
-    <ul class="nav-links">
-      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
-      <li><a routerLink="/news" routerLinkActive="active">Hacker News</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+        <li><a routerLink="/news" routerLinkActive="active">Hacker News</a></li>
+      </ul>
+      <div class="theme-selector">
+        <button
+          class="theme-button"
+          (click)="toggleThemeDropdown($event)"
+          [attr.aria-expanded]="showThemeDropdown()"
+          aria-label="Select theme"
+        >
+          🎨 {{ currentTheme.name }}
+          <span class="dropdown-arrow" [class.open]="showThemeDropdown()">▼</span>
+        </button>
+        @if (showThemeDropdown()) {
+          <div class="theme-dropdown">
+            @for (theme of themes; track theme.id) {
+              <button
+                class="theme-option"
+                [class.active]="theme.id === currentTheme.id"
+                (click)="selectTheme(theme, $event)"
+              >
+                <span class="theme-preview" [attr.data-theme]="theme.id"></span>
+                {{ theme.name }}
+                @if (theme.id === currentTheme.id) {
+                  <span class="check-mark">✓</span>
+                }
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
   </div>
 </nav>
 

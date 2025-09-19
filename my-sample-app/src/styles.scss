@@ -5,25 +5,26 @@
 @use './styles/animations' as *;
 @use './styles/effects' as *;
 
-/* Global styles inspired by Nextech */
+/* Global theme-aware styles */
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: $font-family-base;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
   font-size: $font-size-base;
   line-height: $line-height-base;
-  color: $text-primary;
-  background-color: $background-primary;
+  color: var(--color-text-primary, #000000);
+  background-color: var(--color-background-primary, #ffffff);
   margin: 0;
   padding: 0;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $font-family-base;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
   font-weight: $font-weight-semibold;
-  color: $text-primary;
+  color: var(--color-text-primary, #000000);
   margin: 0 0 1rem 0;
 }
 
@@ -41,48 +42,73 @@ h3 {
   font-size: $font-size-xl;
 }
 
-/* Nextech-style buttons */
+/* Theme-aware buttons */
 .btn {
   display: inline-block;
   padding: 12px 26px;
-  font-size: 1.25rem; // 20px - close to Nextech's 21px
+  font-size: 1.25rem;
   font-weight: $font-weight-semibold;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
   text-decoration: none;
   border: none;
-  border-radius: 8px; // Nextech border radius
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
-  &.btn-primary {
-    background-color: $brand-primary;
-    color: white;
-    border: 1px solid $brand-primary;
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 
-    &:hover {
-      background-color: $brand-primary-dark;
-      border-color: $brand-primary-dark;
+  &.btn-primary {
+    background-color: var(--color-primary, #003b49);
+    color: white;
+    border: 1px solid var(--color-primary, #003b49);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-primary-dark, #002935);
+      border-color: var(--color-primary-dark, #002935);
     }
   }
 
   &.btn-secondary {
-    background-color: $brand-secondary;
+    background-color: var(--color-secondary, #76a239);
     color: white;
-    border: 1px solid $brand-secondary;
+    border: 1px solid var(--color-secondary, #76a239);
 
-    &:hover {
-      background-color: $brand-secondary-dark;
-      border-color: $brand-secondary-dark;
+    &:hover:not(:disabled) {
+      background-color: var(--color-secondary-dark, #5e8129);
+      border-color: var(--color-secondary-dark, #5e8129);
     }
   }
 
   &.btn-accent {
-    background-color: $brand-accent;
+    background-color: var(--color-accent, #ef4423);
     color: white;
-    border: 1px solid $brand-accent;
+    border: 1px solid var(--color-accent, #ef4423);
 
-    &:hover {
-      background-color: $brand-accent-dark;
-      border-color: $brand-accent-dark;
+    &:hover:not(:disabled) {
+      background-color: var(--color-accent-dark, #d53a1f);
+      border-color: var(--color-accent-dark, #d53a1f);
+    }
+  }
+}
+
+/* Theme-specific overrides */
+[data-theme="dark"] {
+  .btn {
+    box-shadow: 0 2px 4px $shadow-light-white;
+  }
+}
+
+[data-theme="colorful"] {
+  .btn {
+    box-shadow: 0 4px 8px $shadow-colorful-primary;
+    transform: translateY(0);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px $shadow-colorful-hover;
     }
   }
 }
