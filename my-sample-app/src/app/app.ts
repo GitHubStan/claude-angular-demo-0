@@ -1,4 +1,4 @@
-import { Component, signal, HostListener } from '@angular/core';
+import { Component, signal, HostListener, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { ThemeService, Theme } from './services/theme.service';
 
@@ -12,8 +12,7 @@ import { ThemeService, Theme } from './services/theme.service';
 export class App {
   protected readonly title = signal('my-sample-app');
   protected readonly showThemeDropdown = signal(false);
-
-  constructor(protected themeService: ThemeService) {}
+  protected readonly themeService = inject(ThemeService);
 
   // Toggle theme dropdown visibility
   toggleThemeDropdown(event?: Event): void {
