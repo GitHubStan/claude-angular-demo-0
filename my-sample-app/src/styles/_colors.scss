@@ -1,3 +1,7 @@
+// Base Color Values (for CSS custom property fallbacks)
+$color-black: #000000;
+$color-white: #ffffff;
+
 // Nextech-inspired Brand Colors
 $brand-primary: #003b49;        // Nextech dark blue
 $brand-primary-dark: #002935;   // Darker shade of primary
@@ -19,7 +23,7 @@ $neutral-700: #495057;
 $neutral-800: #343a40;
 
 // Semantic Colors
-$text-primary: #000000;         // Pure black like Nextech
+$text-primary: $color-black;         // Pure black like Nextech
 $text-secondary: $neutral-600;
 $text-light: $neutral-500;
 $text-link: $brand-primary;
