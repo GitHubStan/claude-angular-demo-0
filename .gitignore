@@ -57,3 +57,6 @@ obj/
 
 # Claude settings
 .claude/settings.local.json
+
+# Playwright MCP artifacts
+.playwright-mcp/
