@@ -61,35 +61,35 @@ h3 {
   }
 
   &.btn-primary {
-    background-color: var(--color-primary, $brand-primary);
+    background-color: var(--color-primary, $color-brand-primary);
     color: $color-white;
-    border: 1px solid var(--color-primary, $brand-primary);
+    border: 1px solid var(--color-primary, $color-brand-primary);
 
     &:hover:not(:disabled) {
-      background-color: var(--color-primary-dark, $brand-primary-dark);
-      border-color: var(--color-primary-dark, $brand-primary-dark);
+      background-color: var(--color-primary-dark, $color-brand-primary-dark);
+      border-color: var(--color-primary-dark, $color-brand-primary-dark);
     }
   }
 
   &.btn-secondary {
-    background-color: var(--color-secondary, $brand-secondary);
+    background-color: var(--color-secondary, $color-brand-secondary);
     color: $color-white;
-    border: 1px solid var(--color-secondary, $brand-secondary);
+    border: 1px solid var(--color-secondary, $color-brand-secondary);
 
     &:hover:not(:disabled) {
-      background-color: var(--color-secondary-dark, $brand-secondary-dark);
-      border-color: var(--color-secondary-dark, $brand-secondary-dark);
+      background-color: var(--color-secondary-dark, $color-brand-secondary-dark);
+      border-color: var(--color-secondary-dark, $color-brand-secondary-dark);
     }
   }
 
   &.btn-accent {
-    background-color: var(--color-accent, $brand-accent);
+    background-color: var(--color-accent, $color-brand-accent);
     color: $color-white;
-    border: 1px solid var(--color-accent, $brand-accent);
+    border: 1px solid var(--color-accent, $color-brand-accent);
 
     &:hover:not(:disabled) {
-      background-color: var(--color-accent-dark, $brand-accent-dark);
-      border-color: var(--color-accent-dark, $brand-accent-dark);
+      background-color: var(--color-accent-dark, $color-brand-accent-dark);
+      border-color: var(--color-accent-dark, $color-brand-accent-dark);
     }
   }
 }
@@ -97,18 +97,18 @@ h3 {
 /* Theme-specific overrides */
 [data-theme="dark"] {
   .btn {
-    box-shadow: 0 2px 4px $shadow-light-white;
+    box-shadow: 0 2px 4px $color-shadow-light-white;
   }
 }
 
 [data-theme="colorful"] {
   .btn {
-    box-shadow: 0 4px 8px $shadow-colorful-primary;
+    box-shadow: 0 4px 8px $color-shadow-colorful-primary;
     transform: translateY(0);
 
     &:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 6px 12px $shadow-colorful-hover;
+      box-shadow: 0 6px 12px $color-shadow-colorful-hover;
     }
   }
 }

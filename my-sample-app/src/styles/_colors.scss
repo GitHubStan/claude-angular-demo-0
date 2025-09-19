@@ -3,38 +3,38 @@ $color-black: #000000;
 $color-white: #ffffff;
 
 // Nextech-inspired Brand Colors
-$brand-primary: #003b49;        // Nextech dark blue
-$brand-primary-dark: #002935;   // Darker shade of primary
-$brand-secondary: #76a239;      // Nextech green
-$brand-secondary-dark: #5e8129; // Darker shade of secondary
-$brand-accent: #ef4423;         // Nextech orange
-$brand-accent-dark: #d53a1f;    // Darker shade of accent
-$brand-success: #4CAF50;
-$brand-danger: #dc3545;
+$color-brand-primary: #003b49;        // Nextech dark blue
+$color-brand-primary-dark: #002935;   // Darker shade of primary
+$color-brand-secondary: #76a239;      // Nextech green
+$color-brand-secondary-dark: #5e8129; // Darker shade of secondary
+$color-brand-accent: #ef4423;         // Nextech orange
+$color-brand-accent-dark: #d53a1f;    // Darker shade of accent
+$color-brand-success: #4CAF50;
+$color-brand-danger: #dc3545;
 
 // Neutral Colors
-$neutral-100: #fff;
-$neutral-200: #f8f9fa;
-$neutral-300: #e9ecef;
-$neutral-400: #dee2e6;
-$neutral-500: #adb5bd;
-$neutral-600: #6c757d;
-$neutral-700: #495057;
-$neutral-800: #343a40;
+$color-neutral-100: #fff;
+$color-neutral-200: #f8f9fa;
+$color-neutral-300: #e9ecef;
+$color-neutral-400: #dee2e6;
+$color-neutral-500: #adb5bd;
+$color-neutral-600: #6c757d;
+$color-neutral-700: #495057;
+$color-neutral-800: #343a40;
 
 // Semantic Colors
-$text-primary: $color-black;         // Pure black like Nextech
-$text-secondary: $neutral-600;
-$text-light: $neutral-500;
-$text-link: $brand-primary;
-$text-link-hover: $brand-primary-dark;
+$color-text-primary: $color-black;         // Pure black like Nextech
+$color-text-secondary: $color-neutral-600;
+$color-text-light: $color-neutral-500;
+$color-text-link: $color-brand-primary;
+$color-text-link-hover: $color-brand-primary-dark;
 
-$background-primary: $neutral-100;
-$background-secondary: $neutral-200;
+$color-background-primary: $color-neutral-100;
+$color-background-secondary: $color-neutral-200;
 
-$border-light: $neutral-300;
+$color-border-light: $color-neutral-300;
 
 // Shadow Colors
-$shadow-light-white: rgba(255, 255, 255, 0.1);         // Light white shadow for dark themes
-$shadow-colorful-primary: rgba(253, 203, 110, 0.3);    // Colorful theme primary shadow
-$shadow-colorful-hover: rgba(253, 203, 110, 0.4);      // Colorful theme hover shadow
+$color-shadow-light-white: rgba(255, 255, 255, 0.1);         // Light white shadow for dark themes
+$color-shadow-colorful-primary: rgba(253, 203, 110, 0.3);    // Colorful theme primary shadow
+$color-shadow-colorful-hover: rgba(253, 203, 110, 0.4);      // Colorful theme hover shadow
