@@ -38,6 +38,7 @@ export class ThemeService {
 
         '--color-border': '#e9ecef',
         '--color-shadow': 'rgba(0, 0, 0, 0.1)',
+        '--color-background-primary-contrast': '#003b49',
 
         '--font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
       }
@@ -66,36 +67,38 @@ export class ThemeService {
 
         '--color-border': '#404040',
         '--color-shadow': 'rgba(255, 255, 255, 0.1)',
+        '--color-background-primary-contrast': '#ffffff',
 
         '--font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
       }
     },
     {
       id: 'colorful',
-      name: 'Colorful & Fun',
+      name: 'Nextech Inspired',
       properties: {
-        // Vibrant, playful theme
-        '--color-primary': '#ff6b9d',
-        '--color-primary-dark': '#e91e63',
-        '--color-secondary': '#4ecdc4',
-        '--color-secondary-dark': '#26a69a',
-        '--color-accent': '#ffd93d',
-        '--color-accent-dark': '#ffc107',
+        // Nextech-inspired theme with #607b8c background and clean white cards
+        '--color-primary': '#003b49',
+        '--color-primary-dark': '#002935',
+        '--color-secondary': '#76a239',
+        '--color-secondary-dark': '#5e8129',
+        '--color-accent': '#ef4423',
+        '--color-accent-dark': '#d53a1f',
         '--color-success': '#4CAF50',
-        '--color-danger': '#ff5722',
+        '--color-danger': '#dc3545',
 
-        '--color-text-primary': '#2d3436',
-        '--color-text-secondary': '#636e72',
-        '--color-text-light': '#b2bec3',
+        '--color-text-primary': '#000000',
+        '--color-text-secondary': '#6c757d',
+        '--color-text-light': '#adb5bd',
 
-        '--color-background-primary': '#ffeaa7',
-        '--color-background-secondary': '#fab1a0',
-        '--color-background-tertiary': '#fd79a8',
+        '--color-background-primary': '#607b8c',
+        '--color-background-primary-contrast': '#ffffff',
+        '--color-background-secondary': '#ffffff',
+        '--color-background-tertiary': '#ffffff',
 
-        '--color-border': '#fdcb6e',
-        '--color-shadow': 'rgba(253, 203, 110, 0.3)',
+        '--color-border': '#e9ecef',
+        '--color-shadow': 'rgba(0, 0, 0, 0.3)',
 
-        '--font-family': '"Comic Sans MS", "Apple Color Emoji", "Segoe UI Emoji", cursive, sans-serif'
+        '--font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
       }
     }
   ];
