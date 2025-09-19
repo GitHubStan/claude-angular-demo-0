@@ -4,39 +4,42 @@
 @use '../styles/animations' as *;
 @use '../styles/effects' as *;
 
+// Nextech-inspired navigation
 .main-nav {
-  background-color: $background-primary;
-  box-shadow: $shadow-sm;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: $z-index-nav;
+  z-index: 1000;
+  border-bottom: 1px solid $border-light;
 }
 
 .nav-content {
-  max-width: $container-lg;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: $spacing-sm;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .nav-brand {
-  color: $brand-secondary;
+  color: $brand-primary;
   text-decoration: none;
   font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  
+  font-weight: $font-weight-semibold;
+  font-family: $font-family-base;
+
   &:hover {
-    color: $brand-secondary-dark;
+    color: $brand-primary-dark;
   }
 }
 
 .nav-links {
   display: flex;
-  gap: $gap-lg;
+  gap: 2rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -44,17 +47,19 @@
   a {
     color: $text-primary;
     text-decoration: none;
-    font-weight: $font-weight-medium;
-    padding: $spacing-xs 0;
+    font-weight: $font-weight-normal;
+    font-size: $font-size-base;
+    padding: 0.5rem 0;
     position: relative;
-    transition: color $transition-fast $ease-default;
+    transition: color 0.2s ease-in-out;
 
     &:hover {
-      color: $brand-secondary;
+      color: $brand-primary;
     }
 
     &.active {
-      color: $brand-secondary;
+      color: $brand-primary;
+      font-weight: $font-weight-semibold;
 
       &::after {
         content: '';
@@ -63,14 +68,17 @@
         left: 0;
         right: 0;
         height: 2px;
-        background-color: $brand-secondary;
+        background-color: $brand-primary;
       }
     }
   }
 }
 
 .main-content {
-  margin-top: 4rem;
+  margin-top: 5rem; // Account for taller nav
   padding: 2rem;
-  min-height: calc(100vh - 4rem);
+  min-height: calc(100vh - 5rem);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }

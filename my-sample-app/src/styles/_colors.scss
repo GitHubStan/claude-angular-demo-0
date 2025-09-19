@@ -1,27 +1,29 @@
-// Brand Colors
-$brand-primary: #ff6600;
-$brand-primary-dark: #e65c00;
-$brand-secondary: #1976d2;
-$brand-secondary-dark: #1565c0;
+// Nextech-inspired Brand Colors
+$brand-primary: #003b49;        // Nextech dark blue
+$brand-primary-dark: #002935;   // Darker shade of primary
+$brand-secondary: #76a239;      // Nextech green
+$brand-secondary-dark: #5e8129; // Darker shade of secondary
+$brand-accent: #ef4423;         // Nextech orange
+$brand-accent-dark: #d53a1f;    // Darker shade of accent
 $brand-success: #4CAF50;
 $brand-danger: #dc3545;
 
 // Neutral Colors
 $neutral-100: #fff;
 $neutral-200: #f8f9fa;
-$neutral-300: #ddd;
-$neutral-400: #ccc;
-$neutral-500: #aaa;
-$neutral-600: #666;
-$neutral-700: #333;
-$neutral-800: #2c3e50;
+$neutral-300: #e9ecef;
+$neutral-400: #dee2e6;
+$neutral-500: #adb5bd;
+$neutral-600: #6c757d;
+$neutral-700: #495057;
+$neutral-800: #343a40;
 
 // Semantic Colors
-$text-primary: $neutral-700;
+$text-primary: #000000;         // Pure black like Nextech
 $text-secondary: $neutral-600;
 $text-light: $neutral-500;
-$text-link: $brand-secondary;
-$text-link-hover: $brand-secondary-dark;
+$text-link: $brand-primary;
+$text-link-hover: $brand-primary-dark;
 
 $background-primary: $neutral-100;
 $background-secondary: $neutral-200;

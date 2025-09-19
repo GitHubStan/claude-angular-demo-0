@@ -5,4 +5,84 @@
 @use './styles/animations' as *;
 @use './styles/effects' as *;
 
-/* You can add global styles to this file, and also import other style files */
+/* Global styles inspired by Nextech */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $text-primary;
+  background-color: $background-primary;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-base;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin: 0 0 1rem 0;
+}
+
+h1 {
+  font-size: $font-size-hero;
+  line-height: $line-height-tight;
+}
+
+h2 {
+  font-size: $font-size-xxl;
+  line-height: $line-height-tight;
+}
+
+h3 {
+  font-size: $font-size-xl;
+}
+
+/* Nextech-style buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 26px;
+  font-size: 1.25rem; // 20px - close to Nextech's 21px
+  font-weight: $font-weight-semibold;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px; // Nextech border radius
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &.btn-primary {
+    background-color: $brand-primary;
+    color: white;
+    border: 1px solid $brand-primary;
+
+    &:hover {
+      background-color: $brand-primary-dark;
+      border-color: $brand-primary-dark;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: $brand-secondary;
+    color: white;
+    border: 1px solid $brand-secondary;
+
+    &:hover {
+      background-color: $brand-secondary-dark;
+      border-color: $brand-secondary-dark;
+    }
+  }
+
+  &.btn-accent {
+    background-color: $brand-accent;
+    color: white;
+    border: 1px solid $brand-accent;
+
+    &:hover {
+      background-color: $brand-accent-dark;
+      border-color: $brand-accent-dark;
+    }
+  }
+}

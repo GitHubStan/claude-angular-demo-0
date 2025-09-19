@@ -1,15 +1,24 @@
-// Font sizes
-$font-size-sm: 0.9rem;
-$font-size-base: 1rem;
-$font-size-lg: 1.2rem;
-$font-size-xl: 1.5rem;
+// Font families - Professional system fonts (similar to Open Sans)
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-base: $font-family-sans-serif;
 
-// Font weights
+// Font sizes - Nextech-inspired sizing
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px - Nextech body text
+$font-size-lg: 1.25rem;    // 20px
+$font-size-xl: 1.5rem;     // 24px
+$font-size-xxl: 2rem;      // 32px
+$font-size-hero: 2.5rem;   // 40px - Nextech hero text
+
+// Font weights - Nextech uses 600 for buttons/headings
+$font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-medium: 500;
+$font-weight-semibold: 600; // Nextech button/heading weight
 $font-weight-bold: 700;
+$font-weight-extrabold: 800;
 
-// Line heights
-$line-height-tight: 1.2;
+// Line heights - Nextech-inspired
+$line-height-tight: 1.25;  // 50px/40px = 1.25 for hero text
 $line-height-base: 1.5;
 $line-height-loose: 1.8;
