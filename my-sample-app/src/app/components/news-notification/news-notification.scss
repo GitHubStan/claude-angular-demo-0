@@ -1,0 +1,173 @@
+@use '../../../styles/colors' as *;
+@use '../../../styles/typography' as *;
+@use '../../../styles/animations' as *;
+
+.notification-banner {
+  position: fixed;
+  top: 80px; // Below the navigation
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  max-width: 600px;
+  width: 90%;
+  background: var(--color-background-tertiary, $color-white);
+  border: 1px solid var(--color-border, $color-neutral-300);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px var(--color-shadow, rgba(0, 0, 0, 0.15));
+  backdrop-filter: blur(10px);
+  animation: slideInFromTop 0.3s ease-out;
+}
+
+.notification-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.notification-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.notification-text {
+  flex: 1;
+  min-width: 0; // Allow text to wrap
+
+  strong {
+    color: var(--color-text-primary, $color-black);
+    font-family: var(--font-family);
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.notification-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.preview-story {
+  color: var(--color-text-secondary, $color-neutral-600);
+  font-size: $font-size-sm;
+  line-height: $line-height-tight;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+
+.more-stories {
+  color: var(--color-text-light, $color-neutral-500);
+  font-size: $font-size-xs;
+  font-style: italic;
+}
+
+.notification-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.btn-refresh {
+  background: var(--color-primary, $color-brand-primary);
+  color: $color-white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--color-primary-dark, $color-brand-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-dismiss {
+  background: transparent;
+  border: none;
+  color: var(--color-text-light, $color-neutral-500);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1;
+
+  &:hover {
+    background: var(--color-background-secondary, $color-neutral-200);
+    color: var(--color-text-secondary, $color-neutral-600);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// Theme-specific styles
+[data-theme="dark"] {
+  .notification-banner {
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+  }
+}
+
+[data-theme="colorful"] {
+  .notification-banner {
+    box-shadow: 0 8px 24px $color-shadow-nextech;
+  }
+
+  .btn-refresh {
+    box-shadow: 0 2px 4px $color-shadow-nextech;
+
+    &:hover {
+      box-shadow: 0 4px 8px $color-shadow-nextech-elevated;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 640px) {
+  .notification-banner {
+    top: 70px;
+    width: 95%;
+  }
+
+  .notification-content {
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .notification-actions {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .btn-refresh {
+    padding: 0.375rem 0.75rem;
+    font-size: $font-size-xs;
+  }
+
+  .preview-story {
+    max-width: 200px;
+  }
+}

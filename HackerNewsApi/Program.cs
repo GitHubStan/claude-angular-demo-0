@@ -1,4 +1,5 @@
 using HackerNewsApi.Services;
+using HackerNewsApi.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,14 +10,21 @@ builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient<IHackerNewsService, HackerNewsService>();
 builder.Services.AddScoped<IHackerNewsService, HackerNewsService>();
 
-// Add CORS for Angular app
+// Add SignalR
+builder.Services.AddSignalR();
+
+// Add background service for news updates
+builder.Services.AddHostedService<NewsUpdateService>();
+
+// Add CORS for Angular app (updated for SignalR)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
     {
         policy.WithOrigins("http://localhost:4200")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials(); // Required for SignalR
     });
 });
 
@@ -30,5 +38,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAngularApp");
 app.MapControllers();
+
+// Map SignalR hub
+app.MapHub<NewsHub>("/newsHub");
 
 app.Run();

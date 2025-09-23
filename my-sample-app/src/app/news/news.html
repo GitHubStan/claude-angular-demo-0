@@ -1,5 +1,42 @@
 <div class="news-container">
+  <!-- New Stories Notification -->
+  <app-news-notification
+    [notification]="newStoriesNotification()"
+    (refresh)="onRefreshStories()"
+    (dismiss)="onDismissNotification()"
+  />
+
   <h1>Hacker News Top Stories</h1>
+
+  <!-- Debug/Test Controls (Development Only) -->
+  <div class="debug-controls" style="margin-bottom: 1rem; padding: 0.5rem; background: #f0f0f0; border-radius: 4px; font-size: 0.9rem;">
+    <strong>🧪 Test Controls:</strong>
+    <button
+      class="btn btn-secondary"
+      style="margin-left: 0.5rem; padding: 0.25rem 0.5rem; font-size: 0.8rem;"
+      (click)="simulateNewStories()"
+    >
+      Simulate New Stories
+    </button>
+    <button
+      class="btn btn-secondary"
+      style="margin-left: 0.5rem; padding: 0.25rem 0.5rem; font-size: 0.8rem;"
+      (click)="clearNotification()"
+    >
+      Clear Notification
+    </button>
+    <button
+      class="btn btn-secondary"
+      style="margin-left: 0.5rem; padding: 0.25rem 0.5rem; font-size: 0.8rem;"
+      (click)="triggerBackendNotification()"
+    >
+      Test Backend SignalR
+    </button>
+    <span style="margin-left: 0.5rem; color: #666;">
+      Cache Size: {{ getCacheInfo() }} |
+      Connected: {{ isConnected() ? '✅' : '❌' }}
+    </span>
+  </div>
 
   <div class="search-box">
     <input 
