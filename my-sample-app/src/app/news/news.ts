@@ -165,7 +165,7 @@ export class NewsComponent implements OnInit, OnDestroy {
   triggerBackendNotification() {
     console.log('🧪 Triggering backend SignalR notification...');
 
-    this.http.post('http://localhost:5000/api/news/test/trigger-notification', {})
+    this.http.post( this.signalRService.apiUrl + '/api/news/test/trigger-notification', {})
       .subscribe({
         next: (response) => {
           console.log('🧪 Backend notification triggered successfully:', response);
