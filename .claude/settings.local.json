@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet add package:*)",
+      "Bash(dotnet test)",
+      "Bash(dotnet clean:*)",
+      "Bash(dotnet run:*)",
+      "Bash(npm start)",
+      "Bash(git add:*)",
+      "Bash(dotnet build)",
+      "mcp__playwright__browser_take_screenshot",
+      "Bash(npm run build:*)",
+      "Bash(dotnet test:*)",
+      "Bash(tasklist)",
+      "Bash(findstr:*)",
+      "Bash(npx tsc:*)",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_navigate",
+      "Bash(npm install:*)",
+      "Bash(npm run ng:*)",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_evaluate"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
