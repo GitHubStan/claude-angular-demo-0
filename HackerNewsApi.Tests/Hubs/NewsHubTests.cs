@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using HackerNewsApi.Hubs;
 using System.Security.Claims;
+using Xunit;
 
 namespace HackerNewsApi.Tests.Hubs;
 
