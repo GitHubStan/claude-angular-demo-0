@@ -16,13 +16,6 @@ out-tsc/
 *.sublime-workspace
 .vs/
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
 # Misc
 .sass-cache/
 connect.lock/
@@ -49,7 +42,6 @@ obj/
 
 # Visual Studio / VS Code
 .vs/
-.vscode/
 *.user
 *.suo
 *.userosscache
