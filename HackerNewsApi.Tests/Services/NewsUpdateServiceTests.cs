@@ -6,6 +6,7 @@ using Moq;
 using HackerNewsApi.Hubs;
 using HackerNewsApi.Models;
 using HackerNewsApi.Services;
+using Xunit;
 
 namespace HackerNewsApi.Tests.Services;
 
