@@ -1,0 +1,69 @@
+name: Build and Deploy Angular Frontend
+
+on:
+  push:
+    branches: [ master ]
+    paths: [ 'HackerNewsFrontend/**' ]
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          lfs: false
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'HackerNewsFrontend/package-lock.json'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+        working-directory: ./HackerNewsFrontend
+
+      - name: 🧪 Run tests
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+        working-directory: ./HackerNewsFrontend
+
+      - name: 🔍 Lint code
+        run: npm run lint --if-present
+        working-directory: ./HackerNewsFrontend
+
+      - name: 🏗️ Build application
+        run: npm run build -- --configuration=production
+        working-directory: ./HackerNewsFrontend
+
+      - name: 🚀 Build And Deploy to Static Web App
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/HackerNewsFrontend"
+          output_location: "dist/hacker-news-frontend"
+
+      - name: ✅ Deployment Summary
+        run: |
+          echo "🎉 Frontend deployment completed successfully!"
+          echo "🔗 Static Web App URL will be available after deployment"
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: "close"

@@ -1,0 +1,54 @@
+name: Deploy .NET API to Azure App Service
+
+on:
+  push:
+    branches: [ master ]
+    paths: [ 'HackerNewsApi/**' ]
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: app-hackernews-demo-api
+  AZURE_WEBAPP_PACKAGE_PATH: './HackerNewsApi'
+  DOTNET_VERSION: '9.0'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🛒 Checkout code
+      uses: actions/checkout@v4
+
+    - name: ⚙️ Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: 🔧 Restore dependencies
+      run: dotnet restore
+      working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: 🏗️ Build application
+      run: dotnet build --no-restore --configuration Release
+      working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: 🧪 Run tests
+      run: dotnet test --no-build --configuration Release --verbosity normal
+      working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: 📦 Publish application
+      run: dotnet publish --no-build --configuration Release --output ./publish
+      working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: 🚀 Deploy to Azure App Service
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'
+
+    - name: ✅ Deployment Summary
+      run: |
+        echo "🎉 Deployment completed successfully!"
+        echo "🔗 App Service URL: https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net"
+        echo "🔍 Health Check: https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net/health"
