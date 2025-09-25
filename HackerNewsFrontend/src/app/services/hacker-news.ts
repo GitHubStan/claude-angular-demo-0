@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface Story {
   id: number;
@@ -30,7 +31,7 @@ interface CacheEntry {
   providedIn: 'root'
 })
 export class HackerNews {
-  private apiUrl = 'http://localhost:5000/api/news';
+  private apiUrl = `${environment.apiUrl}/api/news`;
   private cache = new Map<string, CacheEntry>();
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 
