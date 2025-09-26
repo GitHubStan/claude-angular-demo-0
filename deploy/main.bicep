@@ -93,31 +93,31 @@ resource appService 'Microsoft.Web/sites@2022-09-01' = {
   }
 }
 
-// Static Web App for Angular Frontend
-resource staticWebApp 'Microsoft.Web/staticSites@2022-09-01' = {
-  name: 'stapp-${resourcePrefix}-frontend'
-  location: 'Central US' // Static Web Apps have limited regions
-  sku: {
-    name: 'Free'
-    tier: 'Free'
-  }
-  properties: {
-    repositoryUrl: 'https://github.com/your-username/your-repo' // Update this
-    branch: 'master'
-    buildProperties: {
-      appLocation: '/HackerNewsFrontend'
-      outputLocation: 'dist/hacker-news-frontend'
-    }
-  }
-  tags: {
-    Environment: environment
-    Project: 'HackerNews'
-  }
-}
+// Static Web App for Angular Frontend (temporarily commented out for deployment)
+// resource staticWebApp 'Microsoft.Web/staticSites@2022-09-01' = {
+//   name: 'stapp-${resourcePrefix}-frontend'
+//   location: 'West US 2' // Match the resource group location
+//   sku: {
+//     name: 'Free'
+//     tier: 'Free'
+//   }
+//   properties: {
+//     repositoryUrl: 'https://github.com/GitHubStan/hacker-news'
+//     branch: 'master'
+//     buildProperties: {
+//       appLocation: '/HackerNewsFrontend'
+//       outputLocation: 'dist/hacker-news-frontend'
+//     }
+//   }
+//   tags: {
+//     Environment: environment
+//     Project: 'HackerNews'
+//   }
+// }
 
 // Storage Account for any blob storage needs
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-  name: 'st${namePrefix}${environment}${uniqueString(resourceGroup().id)}'
+  name: 'st${take(uniqueString(resourceGroup().id), 18)}'
   location: location
   sku: {
     name: 'Standard_LRS'
@@ -137,6 +137,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 
 // Outputs for reference
 output appServiceUrl string = 'https://${appService.properties.defaultHostName}'
-output staticWebAppUrl string = 'https://${staticWebApp.properties.defaultHostname}'
+// output staticWebAppUrl string = 'https://${staticWebApp.properties.defaultHostname}'
 output applicationInsightsInstrumentationKey string = applicationInsights.properties.InstrumentationKey
 output resourceGroupName string = resourceGroup().name

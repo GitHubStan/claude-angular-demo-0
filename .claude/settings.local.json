@@ -20,7 +20,17 @@
       "Bash(npm run ng:*)",
       "mcp__playwright__browser_console_messages",
       "mcp__playwright__browser_evaluate",
-      "Bash(dir)"
+      "Bash(dir)",
+      "Bash(az deployment group list:*)",
+      "Bash(az resource list:*)",
+      "Bash(az deployment group show:*)",
+      "Bash(az provider show:*)",
+      "Bash(az containerapp update:*)",
+      "Bash(az containerapp show:*)",
+      "Bash(az containerapp logs show:*)",
+      "Bash(az containerapp ingress update:*)",
+      "Bash(az staticwebapp show:*)",
+      "Bash(az containerapp ingress cors update:*)"
     ],
     "deny": [],
     "ask": []
