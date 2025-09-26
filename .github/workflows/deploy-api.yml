@@ -1,4 +1,4 @@
-name: Deploy .NET API to Azure App Service
+name: Deploy .NET API to Azure Container Apps
 
 on:
   push:
@@ -7,8 +7,10 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: app-hackernews-demo-api
-  AZURE_WEBAPP_PACKAGE_PATH: './HackerNewsApi'
+  AZURE_CONTAINER_APP_NAME: api-hackernews-demo
+  AZURE_RESOURCE_GROUP: DefaultResourceGroup-WUS2
+  AZURE_CONTAINER_REGISTRY: ca9b510639d1acr
+  IMAGE_NAME: hackernews-api
   DOTNET_VERSION: '9.0'
 
 jobs:
@@ -26,29 +28,40 @@ jobs:
 
     - name: 🔧 Restore dependencies
       run: dotnet restore
-      working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      working-directory: ./HackerNewsApi
 
     - name: 🏗️ Build application
       run: dotnet build --no-restore --configuration Release
-      working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      working-directory: ./HackerNewsApi
 
     - name: 🧪 Run tests
       run: dotnet test --no-build --configuration Release --verbosity normal
-      working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      working-directory: ./HackerNewsApi
 
-    - name: 📦 Publish application
-      run: dotnet publish --no-build --configuration Release --output ./publish
-      working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-
-    - name: 🚀 Deploy to Azure App Service
-      uses: azure/webapps-deploy@v3
+    - name: 🔐 Log in to Azure
+      uses: azure/login@v2
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: 🐳 Log in to Azure Container Registry
+      run: |
+        az acr login --name ${{ env.AZURE_CONTAINER_REGISTRY }}
+
+    - name: 📦 Build and push Docker image
+      run: |
+        docker build -t ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} -t ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:latest ./HackerNewsApi
+        docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:latest
+
+    - name: 🚀 Deploy to Azure Container Apps
+      run: |
+        az containerapp update \
+          --name ${{ env.AZURE_CONTAINER_APP_NAME }} \
+          --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+          --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
     - name: ✅ Deployment Summary
       run: |
         echo "🎉 Deployment completed successfully!"
-        echo "🔗 App Service URL: https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net"
-        echo "🔍 Health Check: https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net/health"
+        APP_URL=$(az containerapp show --name ${{ env.AZURE_CONTAINER_APP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --query properties.configuration.ingress.fqdn -o tsv)
+        echo "🔗 Container App URL: https://$APP_URL"
