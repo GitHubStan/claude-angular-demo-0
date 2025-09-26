@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "my-sample-app": {
+    "hacker-news-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -64,10 +64,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "my-sample-app:build:production"
+              "buildTarget": "hacker-news-frontend:build:production"
             },
             "development": {
-              "buildTarget": "my-sample-app:build:development"
+              "buildTarget": "hacker-news-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
