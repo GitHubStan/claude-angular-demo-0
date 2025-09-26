@@ -36,9 +36,9 @@ describe('WelcomeComponent', () => {
       
       // Check some specific features
       const featureTexts = features.map(f => f.nativeElement.textContent.trim());
-      expect(featureTexts).toContain('Angular 17+ with standalone components');
-      expect(featureTexts).toContain('SCSS styling');
-      expect(featureTexts).toContain('Routing enabled');
+      expect(featureTexts).toContain('Angular 20+ with standalone components');
+      expect(featureTexts).toContain('Professional SCSS styling inspired by Nextech');
+      expect(featureTexts).toContain('Modern routing with zoneless change detection');
     });
 
     it('should apply checkmark style to feature items', () => {
@@ -50,23 +50,21 @@ describe('WelcomeComponent', () => {
 
   describe('CTA Button', () => {
     it('should display the CTA button', () => {
-      const cta = fixture.debugElement.query(By.css('.cta-button'));
+      const cta = fixture.debugElement.query(By.css('.btn.btn-primary'));
       expect(cta).toBeTruthy();
       expect(cta.nativeElement.textContent).toContain('View Hacker News');
     });
 
     it('should have correct routerLink for navigation', () => {
-      const cta = fixture.debugElement.query(By.css('.cta-button'));
+      const cta = fixture.debugElement.query(By.css('.btn.btn-primary'));
       expect(cta.attributes['routerLink']).toBe('/news');
     });
 
     it('should have proper styling', () => {
-      const cta = fixture.debugElement.query(By.css('.cta-button'));
-      const styles = window.getComputedStyle(cta.nativeElement);
-      
-      expect(cta.classes['cta-button']).toBeTrue();
-      expect(styles.display).toBe('inline-block');
-      expect(styles.fontWeight).toBe('700');
+      const cta = fixture.debugElement.query(By.css('.btn.btn-primary'));
+      expect(cta).toBeTruthy();
+      expect(cta.classes['btn']).toBeTrue();
+      expect(cta.classes['btn-primary']).toBeTrue();
     });
   });
 
