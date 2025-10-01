@@ -1,5 +1,6 @@
-import { Injectable, signal, inject } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
+import { environment } from '../../environments/environment';
 
 export interface NewStoriesNotification {
   count: number;
@@ -50,26 +51,34 @@ export class SignalRService {
 
     // Handle connection state changes
     this.hubConnection.onclose(() => {
-      console.log('SignalR connection closed');
+      if (!environment.production) {
+        console.log('SignalR connection closed');
+      }
       this.connectionState.set(HubConnectionState.Disconnected);
       this.isConnected.set(false);
     });
 
     this.hubConnection.onreconnecting(() => {
-      console.log('SignalR reconnecting...');
+      if (!environment.production) {
+        console.log('SignalR reconnecting...');
+      }
       this.connectionState.set(HubConnectionState.Reconnecting);
       this.isConnected.set(false);
     });
 
     this.hubConnection.onreconnected(() => {
-      console.log('SignalR reconnected');
+      if (!environment.production) {
+        console.log('SignalR reconnected');
+      }
       this.connectionState.set(HubConnectionState.Connected);
       this.isConnected.set(true);
     });
 
     // Handle new stories notification
     this.hubConnection.on('NewStoriesAvailable', (notification: NewStoriesNotification) => {
-      console.log('Received new stories notification:', notification);
+      if (!environment.production) {
+        console.log('Received new stories notification:', notification);
+      }
       this.newStoriesAvailable.set(notification);
     });
   }
@@ -81,13 +90,17 @@ export class SignalRService {
 
     try {
       await this.hubConnection.start();
-      console.log('SignalR connection started');
+      if (!environment.production) {
+        console.log('SignalR connection started');
+      }
       this.connectionState.set(HubConnectionState.Connected);
       this.isConnected.set(true);
 
       // Join the news updates group
       await this.hubConnection.invoke('JoinNewsUpdates');
-      console.log('Joined news updates group');
+      if (!environment.production) {
+        console.log('Joined news updates group');
+      }
     } catch (error) {
       console.error('Error starting SignalR connection:', error);
       this.connectionState.set(HubConnectionState.Disconnected);
@@ -103,7 +116,9 @@ export class SignalRService {
 
     try {
       await this.hubConnection.stop();
-      console.log('SignalR connection stopped');
+      if (!environment.production) {
+        console.log('SignalR connection stopped');
+      }
       this.connectionState.set(HubConnectionState.Disconnected);
       this.isConnected.set(false);
     } catch (error) {
@@ -119,7 +134,9 @@ export class SignalRService {
 
     try {
       await this.hubConnection.invoke('JoinNewsUpdates');
-      console.log('Joined news updates group');
+      if (!environment.production) {
+        console.log('Joined news updates group');
+      }
     } catch (error) {
       console.error('Error joining news updates group:', error);
       throw error;
@@ -133,7 +150,9 @@ export class SignalRService {
 
     try {
       await this.hubConnection.invoke('LeaveNewsUpdates');
-      console.log('Left news updates group');
+      if (!environment.production) {
+        console.log('Left news updates group');
+      }
     } catch (error) {
       console.error('Error leaving news updates group:', error);
       throw error;
