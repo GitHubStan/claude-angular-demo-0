@@ -5,11 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { HackerNews, Story } from '../services/hacker-news';
 import { SignalRService } from '../services/signalr';
 import { NewsNotificationComponent } from '../components/news-notification/news-notification';
+import { FormatTimePipe } from '../pipes/format-time.pipe';
 
 @Component({
   selector: 'app-news',
   standalone: true,
-  imports: [CommonModule, FormsModule, NewsNotificationComponent],
+  imports: [CommonModule, FormsModule, NewsNotificationComponent, FormatTimePipe],
   templateUrl: './news.html',
   styleUrl: './news.scss'
 })
@@ -89,10 +90,6 @@ export class NewsComponent implements OnInit, OnDestroy {
       });
   }
 
-  formatTime(timestamp: number): string {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleString();
-  }
 
   nextPage() {
     if (this.currentPage() < this.totalPages()) {

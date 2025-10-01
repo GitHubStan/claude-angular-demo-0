@@ -62,7 +62,7 @@
           <div class="story-meta">
             <span>{{ story.score }} points</span>
             <span>by {{ story.by }}</span>
-            <span>{{ formatTime(story.time) }}</span>
+            <span>{{ story.time | formatTime }}</span>
             <span>{{ story.descendants }} comments</span>
           </div>
         </article>
