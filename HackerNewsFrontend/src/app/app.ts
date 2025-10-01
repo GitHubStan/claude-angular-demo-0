@@ -22,9 +22,7 @@ export class App {
       event.preventDefault();
       event.stopPropagation();
     }
-    console.log('Toggle dropdown clicked, current state:', this.showThemeDropdown());
     this.showThemeDropdown.update(show => !show);
-    console.log('New dropdown state:', this.showThemeDropdown());
   }
 
   // Close theme dropdown
@@ -38,7 +36,6 @@ export class App {
       event.preventDefault();
       event.stopPropagation();
     }
-    console.log('Selecting theme:', theme.name);
     this.themeService.setTheme(theme.id);
     this.closeThemeDropdown();
   }
@@ -46,7 +43,6 @@ export class App {
   // Close dropdown when clicking outside
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
-    console.log('Document clicked, dropdown visible:', this.showThemeDropdown());
     if (this.showThemeDropdown()) {
       this.closeThemeDropdown();
     }

@@ -55,12 +55,16 @@ export class HackerNews {
     const entry = this.cache.get(key);
 
     if (entry && this.isCacheValid(entry)) {
-      console.log(`Cache hit for page ${page} with size ${pageSize}`);
+      if (!environment.production) {
+        console.log(`Cache hit for page ${page} with size ${pageSize}`);
+      }
       return entry.stories;
     }
 
     if (entry && !this.isCacheValid(entry)) {
-      console.log(`Cache expired for page ${page} with size ${pageSize}`);
+      if (!environment.production) {
+        console.log(`Cache expired for page ${page} with size ${pageSize}`);
+      }
       this.cache.delete(key);
     }
 
@@ -75,11 +79,15 @@ export class HackerNews {
       totalPages
     };
     this.cache.set(key, entry);
-    console.log(`Cached ${stories.length} stories for page ${page} with size ${pageSize}`);
+    if (!environment.production) {
+      console.log(`Cached ${stories.length} stories for page ${page} with size ${pageSize}`);
+    }
   }
 
   getTopStories(pageSize: number = 10, page: number = 1, forceRefresh: boolean = false): Observable<Story[]> {
-    console.log(`Fetching top stories for page ${page} with size ${pageSize}...`);
+    if (!environment.production) {
+      console.log(`Fetching top stories for page ${page} with size ${pageSize}...`);
+    }
 
     // Check cache first unless forced refresh
     if (!forceRefresh) {
@@ -93,7 +101,9 @@ export class HackerNews {
     return this.http.get<ApiResponse>(`${this.apiUrl}/top-stories?pageSize=${pageSize}&page=${page}`)
       .pipe(
         map(response => {
-          console.log(`Got ${response.stories.length} stories from API`);
+          if (!environment.production) {
+            console.log(`Got ${response.stories.length} stories from API`);
+          }
           return response.stories;
         }),
         tap(stories => {
@@ -109,7 +119,9 @@ export class HackerNews {
     const entry = this.cache.get(key);
 
     if (entry && this.isCacheValid(entry) && entry.totalPages !== undefined) {
-      console.log(`Cache hit for total pages with size ${pageSize}`);
+      if (!environment.production) {
+        console.log(`Cache hit for total pages with size ${pageSize}`);
+      }
       return of(entry.totalPages);
     }
 
@@ -129,7 +141,9 @@ export class HackerNews {
   // Method to clear cache when new stories are available
   clearCache(): void {
     this.cache.clear();
-    console.log('Story cache cleared');
+    if (!environment.production) {
+      console.log('Story cache cleared');
+    }
   }
 
   // Method to invalidate only page 1 cache when new stories arrive
@@ -137,7 +151,9 @@ export class HackerNews {
     const keys = Array.from(this.cache.keys()).filter(key => key.includes('_1'));
     keys.forEach(key => {
       this.cache.delete(key);
-      console.log(`Invalidated cache key: ${key}`);
+      if (!environment.production) {
+        console.log(`Invalidated cache key: ${key}`);
+      }
     });
   }
 

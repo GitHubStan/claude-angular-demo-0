@@ -8,6 +8,7 @@ import { NewsNotificationComponent } from '../components/news-notification/news-
 import { FormatTimePipe } from '../pipes/format-time.pipe';
 import { Subscription } from 'rxjs';
 import { switchMap, tap, catchError, map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-news',
@@ -49,7 +50,9 @@ export class NewsComponent implements OnInit, OnDestroy {
     // Start SignalR connection
     try {
       await this.signalRService.startConnection();
-      console.log('Connected to SignalR hub');
+      if (!environment.production) {
+        console.log('Connected to SignalR hub');
+      }
     } catch (error) {
       console.error('Failed to connect to SignalR hub:', error);
     }
@@ -69,17 +72,14 @@ export class NewsComponent implements OnInit, OnDestroy {
   loadStories(forceRefresh: boolean = false) {
     this.loading.set(true);
     this.error.set(null);
-    console.log('Loading stories...');
 
     // Unsubscribe from previous request if still running
     this.loadStoriesSubscription?.unsubscribe();
 
     this.loadStoriesSubscription = this.hackerNewsService.getTopStories(this.pageSize(), this.currentPage(), forceRefresh)
       .pipe(
-        tap(stories => console.log('Stories received:', stories)),
         switchMap(stories =>
           this.hackerNewsService.getTotalPages(this.pageSize()).pipe(
-            tap(() => console.log('Total pages retrieved')),
             map(totalPages => ({ stories, totalPages }))
           )
         ),
@@ -160,12 +160,16 @@ export class NewsComponent implements OnInit, OnDestroy {
 
     // Manually set the notification to simulate SignalR receiving new stories
     this.signalRService.newStoriesAvailable.set(mockNotification);
-    console.log('🧪 Simulated new stories notification:', mockNotification);
+    if (!environment.production) {
+      console.log('🧪 Simulated new stories notification:', mockNotification);
+    }
   }
 
   clearNotification() {
     this.signalRService.clearNewStoriesNotification();
-    console.log('🧪 Cleared notification');
+    if (!environment.production) {
+      console.log('🧪 Cleared notification');
+    }
   }
 
   updateCacheInfo() {
@@ -173,12 +177,16 @@ export class NewsComponent implements OnInit, OnDestroy {
   }
 
   triggerBackendNotification() {
-    console.log('🧪 Triggering backend SignalR notification...');
+    if (!environment.production) {
+      console.log('🧪 Triggering backend SignalR notification...');
+    }
 
     this.http.post( this.signalRService.apiUrl + '/api/news/test/trigger-notification', {})
       .subscribe({
         next: (response) => {
-          console.log('🧪 Backend notification triggered successfully:', response);
+          if (!environment.production) {
+            console.log('🧪 Backend notification triggered successfully:', response);
+          }
         },
         error: (error) => {
           console.error('🧪 Error triggering backend notification:', error);
