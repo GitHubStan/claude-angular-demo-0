@@ -32,9 +32,12 @@ describe('NewsComponent', () => {
     const signalRSpy = jasmine.createSpyObj('SignalRService', [
       'startConnection',
       'stopConnection',
-      'addListener',
-      'removeListener'
-    ]);
+      'clearNewStoriesNotification'
+    ], {
+      newStoriesAvailable: jasmine.createSpy().and.returnValue(null),
+      isConnected: jasmine.createSpy().and.returnValue(false),
+      apiUrl: 'http://localhost:5000'
+    });
     signalRSpy.startConnection.and.returnValue(Promise.resolve());
     signalRSpy.stopConnection.and.returnValue(Promise.resolve());
 
@@ -57,19 +60,19 @@ describe('NewsComponent', () => {
   });
 
   describe('Story Loading', () => {
-    xit('should load stories on init', fakeAsync(() => {
-      // Skip: Template rendering issues with complex signal bindings
+    it('should load stories on init', fakeAsync(() => {
       fixture.detectChanges();
       tick();
 
-      expect(hackerNewsService.getTopStories).toHaveBeenCalledWith(10, 1);
+      expect(hackerNewsService.getTopStories).toHaveBeenCalledWith(10, 1, false);
+      expect(hackerNewsService.getTotalPages).toHaveBeenCalledWith(10);
       expect(component.stories()).toEqual(mockStories);
+      expect(component.totalPages()).toBe(5);
       expect(component.loading()).toBeFalse();
       expect(component.error()).toBeNull();
     }));
 
-    xit('should show error message when loading fails', fakeAsync(() => {
-      // Skip: Template rendering issues with complex signal bindings
+    it('should show error message when loading fails', fakeAsync(() => {
       hackerNewsService.getTopStories.and.returnValue(throwError(() => new Error('Failed to load')));
 
       fixture.detectChanges();
@@ -81,7 +84,7 @@ describe('NewsComponent', () => {
   });
 
   describe('Pagination', () => {
-    xit('should update page and reload stories when nextPage is called', fakeAsync(() => {
+    it('should update page and reload stories when nextPage is called', fakeAsync(() => {
       fixture.detectChanges();
       tick();
 
@@ -89,10 +92,10 @@ describe('NewsComponent', () => {
       tick();
 
       expect(component.currentPage()).toBe(2);
-      expect(hackerNewsService.getTopStories).toHaveBeenCalledWith(10, 2);
+      expect(hackerNewsService.getTopStories).toHaveBeenCalledWith(10, 2, false);
     }));
 
-    xit('should update page and reload stories when previousPage is called', fakeAsync(() => {
+    it('should update page and reload stories when previousPage is called', fakeAsync(() => {
       component.currentPage.set(2);
       fixture.detectChanges();
       tick();
@@ -101,7 +104,7 @@ describe('NewsComponent', () => {
       tick();
 
       expect(component.currentPage()).toBe(1);
-      expect(hackerNewsService.getTopStories).toHaveBeenCalledWith(10, 1);
+      expect(hackerNewsService.getTopStories).toHaveBeenCalledWith(10, 1, false);
     }));
 
     xit('should disable previous button on first page', () => {
@@ -125,7 +128,7 @@ describe('NewsComponent', () => {
   });
 
   describe('Search', () => {
-    xit('should filter stories based on search query', fakeAsync(() => {
+    it('should filter stories based on search query', fakeAsync(() => {
       fixture.detectChanges();
       tick();
 
@@ -136,7 +139,7 @@ describe('NewsComponent', () => {
       expect(component.filteredStories()[0].title).toBe('Test Story 1');
     }));
 
-    xit('should show all stories when search query is empty', fakeAsync(() => {
+    it('should show all stories when search query is empty', fakeAsync(() => {
       fixture.detectChanges();
       tick();
 
@@ -146,7 +149,7 @@ describe('NewsComponent', () => {
       expect(component.filteredStories().length).toBe(mockStories.length);
     }));
 
-    xit('should be case insensitive', fakeAsync(() => {
+    it('should be case insensitive', fakeAsync(() => {
       fixture.detectChanges();
       tick();
 
@@ -157,11 +160,14 @@ describe('NewsComponent', () => {
     }));
   });
 
-  describe('Time Formatting', () => {
-    it('should format timestamps correctly', () => {
-      const timestamp = 1632144000; // 2021-09-20 12:00:00
-      const formatted = component.formatTime(timestamp);
-      expect(formatted).toBe(new Date(timestamp * 1000).toLocaleString());
-    });
+  describe('Cache Info', () => {
+    it('should update cache info after loading stories', fakeAsync(() => {
+      hackerNewsService.getCacheSize.and.returnValue(2);
+
+      fixture.detectChanges();
+      tick();
+
+      expect(component.cacheInfo()).toBe('2 entries');
+    }));
   });
 });
