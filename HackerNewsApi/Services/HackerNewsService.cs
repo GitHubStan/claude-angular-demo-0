@@ -41,7 +41,7 @@ public class HackerNewsService : IHackerNewsService
         var tasks = pageIds.Select(GetStoryAsync);
         var results = await Task.WhenAll(tasks);
 
-        return results.Where(story => story != null).Cast<Story>();
+        return results.Where(story => story != null).Cast<Story>().OrderByDescending(s => s.Time);
     }
 
     public async Task<int> GetTotalPagesAsync(int pageSize = 10)
