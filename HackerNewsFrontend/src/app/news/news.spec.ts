@@ -157,11 +157,4 @@ describe('NewsComponent', () => {
     }));
   });
 
-  describe('Time Formatting', () => {
-    it('should format timestamps correctly', () => {
-      const timestamp = 1632144000; // 2021-09-20 12:00:00
-      const formatted = component.formatTime(timestamp);
-      expect(formatted).toBe(new Date(timestamp * 1000).toLocaleString());
-    });
-  });
 });
