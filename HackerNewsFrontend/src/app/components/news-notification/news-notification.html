@@ -5,11 +5,11 @@
           <div class="notification-text">
             <strong>{{ notification()!.count }} new stories available!</strong>
             <div class="notification-preview">
-              @for (story of notification()!.stories.slice(0, 2); track story.id) {
+              @for (story of previewStories(); track story.id) {
                 <div class="preview-story">{{ story.title }}</div>
               }
-              @if (notification()!.count > 2) {
-                <div class="more-stories">+{{ notification()!.count - 2 }} more...</div>
+              @if (remainingCount() > 0) {
+                <div class="more-stories">+{{ remainingCount() }} more...</div>
               }
             </div>
           </div>
