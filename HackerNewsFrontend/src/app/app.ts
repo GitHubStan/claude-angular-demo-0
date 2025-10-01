@@ -13,6 +13,8 @@ export class App {
   protected readonly title = signal('my-sample-app');
   protected readonly showThemeDropdown = signal(false);
   protected readonly themeService = inject(ThemeService);
+  protected readonly themes = this.themeService.getThemes();
+  protected readonly currentTheme = this.themeService.currentTheme;
 
   // Toggle theme dropdown visibility
   toggleThemeDropdown(event?: Event): void {
@@ -39,16 +41,6 @@ export class App {
     console.log('Selecting theme:', theme.name);
     this.themeService.setTheme(theme.id);
     this.closeThemeDropdown();
-  }
-
-  // Get available themes
-  get themes(): Theme[] {
-    return this.themeService.getThemes();
-  }
-
-  // Get current theme
-  get currentTheme(): Theme {
-    return this.themeService.currentTheme();
   }
 
   // Close dropdown when clicking outside

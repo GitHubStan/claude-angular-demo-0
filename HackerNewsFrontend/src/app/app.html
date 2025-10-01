@@ -13,7 +13,7 @@
           [attr.aria-expanded]="showThemeDropdown()"
           aria-label="Select theme"
         >
-          🎨 {{ currentTheme.name }}
+          🎨 {{ currentTheme().name }}
           <span class="dropdown-arrow" [class.open]="showThemeDropdown()">▼</span>
         </button>
         @if (showThemeDropdown()) {
@@ -21,12 +21,12 @@
             @for (theme of themes; track theme.id) {
               <button
                 class="theme-option"
-                [class.active]="theme.id === currentTheme.id"
+                [class.active]="theme.id === currentTheme().id"
                 (click)="selectTheme(theme, $event)"
               >
                 <span class="theme-preview" [attr.data-theme]="theme.id"></span>
                 {{ theme.name }}
-                @if (theme.id === currentTheme.id) {
+                @if (theme.id === currentTheme().id) {
                   <span class="check-mark">✓</span>
                 }
               </button>
