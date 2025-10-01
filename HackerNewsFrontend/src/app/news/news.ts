@@ -6,6 +6,8 @@ import { HackerNews, Story } from '../services/hacker-news';
 import { SignalRService } from '../services/signalr';
 import { NewsNotificationComponent } from '../components/news-notification/news-notification';
 import { FormatTimePipe } from '../pipes/format-time.pipe';
+import { Subscription } from 'rxjs';
+import { switchMap, tap, catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-news',
@@ -19,6 +21,7 @@ export class NewsComponent implements OnInit, OnDestroy {
   private hackerNewsService = inject(HackerNews);
   private signalRService = inject(SignalRService);
   private http = inject(HttpClient);
+  private loadStoriesSubscription?: Subscription;
 
   stories = signal<Story[]>([]);
   loading = signal(true);
@@ -53,6 +56,9 @@ export class NewsComponent implements OnInit, OnDestroy {
   }
 
   async ngOnDestroy() {
+    // Clean up subscriptions
+    this.loadStoriesSubscription?.unsubscribe();
+
     try {
       await this.signalRService.stopConnection();
     } catch (error) {
@@ -65,29 +71,34 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.error.set(null);
     console.log('Loading stories...');
 
-    this.hackerNewsService.getTopStories(this.pageSize(), this.currentPage(), forceRefresh)
-      .subscribe({
-        next: (stories) => {
-          console.log('Stories received:', stories);
-          this.stories.set(stories);
-          this.loading.set(false);
-          this.updateCacheInfo();
+    // Unsubscribe from previous request if still running
+    this.loadStoriesSubscription?.unsubscribe();
 
-          // Get total pages separately
-          this.hackerNewsService.getTotalPages(this.pageSize())
-            .subscribe({
-              next: (totalPages) => {
-                this.totalPages.set(totalPages);
-              },
-              error: (err) => {
-                console.error('Error getting total pages:', err);
-              }
-            });
-        },
-        error: (err) => {
+    this.loadStoriesSubscription = this.hackerNewsService.getTopStories(this.pageSize(), this.currentPage(), forceRefresh)
+      .pipe(
+        tap(stories => console.log('Stories received:', stories)),
+        switchMap(stories =>
+          this.hackerNewsService.getTotalPages(this.pageSize()).pipe(
+            tap(() => console.log('Total pages retrieved')),
+            map(totalPages => ({ stories, totalPages }))
+          )
+        ),
+        catchError((err) => {
           console.error('Error loading stories:', err);
           this.error.set('Failed to load stories. Please try again later.');
           this.loading.set(false);
+          throw err;
+        })
+      )
+      .subscribe({
+        next: ({ stories, totalPages }) => {
+          this.stories.set(stories);
+          this.totalPages.set(totalPages);
+          this.loading.set(false);
+          this.updateCacheInfo();
+        },
+        error: (err) => {
+          console.error('Error in loadStories pipeline:', err);
         }
       });
   }
