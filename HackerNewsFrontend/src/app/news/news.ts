@@ -27,6 +27,7 @@ export class NewsComponent implements OnInit, OnDestroy {
   currentPage = signal(1);
   pageSize = signal(10);
   totalPages = signal(0);
+  cacheInfo = signal('0 entries');
 
   // SignalR state
   newStoriesNotification = this.signalRService.newStoriesAvailable;
@@ -70,6 +71,7 @@ export class NewsComponent implements OnInit, OnDestroy {
           console.log('Stories received:', stories);
           this.stories.set(stories);
           this.loading.set(false);
+          this.updateCacheInfo();
 
           // Get total pages separately
           this.hackerNewsService.getTotalPages(this.pageSize())
@@ -155,8 +157,8 @@ export class NewsComponent implements OnInit, OnDestroy {
     console.log('🧪 Cleared notification');
   }
 
-  getCacheInfo(): string {
-    return `${this.hackerNewsService.getCacheSize()} entries`;
+  updateCacheInfo() {
+    this.cacheInfo.set(`${this.hackerNewsService.getCacheSize()} entries`);
   }
 
   triggerBackendNotification() {
