@@ -20,7 +20,8 @@
       "Bash(npm run ng:*)",
       "mcp__playwright__browser_console_messages",
       "mcp__playwright__browser_evaluate",
-      "Bash(dir)"
+      "Bash(dir)",
+      "Bash(timeout:*)"
     ],
     "deny": [],
     "ask": []

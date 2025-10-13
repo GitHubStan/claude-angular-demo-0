@@ -1,0 +1,91 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="lock-icon">🔒</div>
+    <h1>Protected Profile</h1>
+    <p class="subtitle">This page requires authentication</p>
+  </div>
+
+  @if (user$ | async; as user) {
+    <div class="user-card">
+      <div class="user-avatar">
+        @if (user.picture) {
+          <img [src]="user.picture" [alt]="user.name" />
+        } @else {
+          <div class="avatar-placeholder">{{ user.name?.charAt(0) || 'U' }}</div>
+        }
+      </div>
+      <div class="user-info">
+        <h2>{{ user.name }}</h2>
+        <p class="user-email">{{ user.email }}</p>
+        @if (user.email_verified) {
+          <span class="verified-badge">✓ Verified</span>
+        }
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h3>Authentication Details</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">User ID:</span>
+          <span class="info-value">{{ user.sub }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Updated At:</span>
+          <span class="info-value">{{ user.updated_at | date:'medium' }}</span>
+        </div>
+        @if (user.nickname) {
+          <div class="info-item">
+            <span class="info-label">Nickname:</span>
+            <span class="info-value">{{ user.nickname }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="success-message">
+      <div class="success-icon">✓</div>
+      <div class="success-content">
+        <h3>Authentication Successful!</h3>
+        <p>
+          You are viewing this page because you successfully authenticated with Auth0.
+          This demonstrates a protected route that requires a valid JWT token.
+        </p>
+      </div>
+    </div>
+  }
+
+  <div class="features-section">
+    <h3>What's Protected Here?</h3>
+    <ul class="features-list">
+      <li>
+        <span class="feature-icon">🔐</span>
+        <div class="feature-text">
+          <strong>Route Protection:</strong> This page is protected by an auth guard that redirects
+          unauthenticated users to the login page.
+        </div>
+      </li>
+      <li>
+        <span class="feature-icon">🎫</span>
+        <div class="feature-text">
+          <strong>JWT Tokens:</strong> All API requests from this page automatically include your
+          authentication token via HTTP interceptor.
+        </div>
+      </li>
+      <li>
+        <span class="feature-icon">👤</span>
+        <div class="feature-text">
+          <strong>User Identity:</strong> Your user profile information is retrieved from Auth0
+          and displayed securely.
+        </div>
+      </li>
+      <li>
+        <span class="feature-icon">⚡</span>
+        <div class="feature-text">
+          <strong>Feature Flag:</strong> This entire authentication system can be disabled via
+          environment configuration without code changes.
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

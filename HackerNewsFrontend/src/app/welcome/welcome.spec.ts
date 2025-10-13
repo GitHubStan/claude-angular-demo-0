@@ -33,11 +33,11 @@ describe('WelcomeComponent', () => {
     it('should render feature list', () => {
       const features = fixture.debugElement.queryAll(By.css('.features li'));
       expect(features.length).toBeGreaterThan(0);
-      
+
       // Check some specific features
       const featureTexts = features.map(f => f.nativeElement.textContent.trim());
       expect(featureTexts).toContain('Angular 20+ with standalone components');
-      expect(featureTexts).toContain('Professional SCSS styling inspired by Nextech');
+      expect(featureTexts).toContain('SCSS styling with theme picker');
       expect(featureTexts).toContain('Modern routing with zoneless change detection');
     });
 
