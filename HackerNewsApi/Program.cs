@@ -1,5 +1,7 @@
 using HackerNewsApi.Services;
 using HackerNewsApi.Hubs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,30 @@ builder.Services.AddOpenApi();
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient<IHackerNewsService, HackerNewsService>();
 builder.Services.AddScoped<IHackerNewsService, HackerNewsService>();
+
+// Configure Auth0 JWT authentication (with feature flag)
+var auth0Enabled = builder.Configuration.GetValue<bool>("Auth0:Enabled");
+if (auth0Enabled)
+{
+    var domain = builder.Configuration["Auth0:Domain"];
+    var audience = builder.Configuration["Auth0:Audience"];
+
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.Authority = $"https://{domain}/";
+            options.Audience = audience;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true
+            };
+        });
+
+    builder.Services.AddAuthorization();
+}
 
 // Add SignalR
 builder.Services.AddSignalR();
@@ -54,6 +80,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAngularApp");
+
+// Use authentication and authorization if Auth0 is enabled
+if (auth0Enabled)
+{
+    app.UseAuthentication();
+    app.UseAuthorization();
+}
 
 // Add security headers
 app.Use(async (context, next) =>

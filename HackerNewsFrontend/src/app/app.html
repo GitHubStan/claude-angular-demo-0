@@ -6,6 +6,18 @@
         <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
         <li><a routerLink="/news" routerLinkActive="active">Hacker News</a></li>
       </ul>
+      @if (isAuthEnabled) {
+        <div class="auth-section">
+          @if (isAuthenticated$ | async) {
+            <div class="user-info">
+              <span class="user-name">{{ (user$ | async)?.name || (user$ | async)?.email }}</span>
+              <button class="auth-button logout" (click)="logout()">Logout</button>
+            </div>
+          } @else {
+            <button class="auth-button login" (click)="login()">Login</button>
+          }
+        </div>
+      }
       <div class="theme-selector">
         <button
           class="theme-button"

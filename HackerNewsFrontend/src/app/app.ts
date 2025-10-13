@@ -1,11 +1,13 @@
 import { Component, signal, HostListener, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
 import { ThemeService, Theme } from './services/theme.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, AsyncPipe],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -13,8 +15,14 @@ export class App {
   protected readonly title = signal('my-sample-app');
   protected readonly showThemeDropdown = signal(false);
   protected readonly themeService = inject(ThemeService);
+  protected readonly authService = inject(AuthService);
   protected readonly themes = this.themeService.getThemes();
   protected readonly currentTheme = this.themeService.currentTheme;
+
+  // Auth0 observables
+  protected readonly isAuthenticated$ = this.authService.isAuthenticated$;
+  protected readonly user$ = this.authService.user$;
+  protected readonly isAuthEnabled = this.authService.isEnabled;
 
   // Toggle theme dropdown visibility
   toggleThemeDropdown(event?: Event): void {
@@ -46,5 +54,15 @@ export class App {
     if (this.showThemeDropdown()) {
       this.closeThemeDropdown();
     }
+  }
+
+  // Auth0 login
+  login(): void {
+    this.authService.login();
+  }
+
+  // Auth0 logout
+  logout(): void {
+    this.authService.logout();
   }
 }

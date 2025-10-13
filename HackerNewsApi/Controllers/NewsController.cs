@@ -1,12 +1,15 @@
 using HackerNewsApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Authorization;
 using HackerNewsApi.Hubs;
 
 namespace HackerNewsApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+// Uncomment the following line to require authentication for all endpoints in this controller
+// [Authorize]
 public class NewsController : ControllerBase
 {
     private readonly IHackerNewsService _hackerNewsService;

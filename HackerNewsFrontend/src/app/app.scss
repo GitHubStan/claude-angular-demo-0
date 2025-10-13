@@ -6,14 +6,14 @@
 
 // Theme-aware navigation using CSS custom properties
 .main-nav {
-  background-color: var(--color-background-secondary, white);
-  box-shadow: 0 2px 4px var(--color-shadow, rgba(0, 0, 0, 0.1));
+  background-color: var(--color-background-secondary, $color-background-secondary);
+  box-shadow: 0 2px 4px var(--color-shadow, $color-shadow);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  border-bottom: 1px solid var(--color-border, #e9ecef);
+  border-bottom: 1px solid var(--color-border, $color-border);
   font-family: var(--font-family);
 }
 
@@ -33,14 +33,14 @@
 }
 
 .nav-brand {
-  color: var(--color-primary, #003b49);
+  color: var(--color-primary, $color-brand-primary);
   text-decoration: none;
   font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
   font-family: var(--font-family);
 
   &:hover {
-    color: var(--color-primary-dark, #002935);
+    color: var(--color-primary-dark, $color-brand-primary-dark);
   }
 }
 
@@ -52,7 +52,7 @@
   padding: 0;
 
   a {
-    color: var(--color-text-primary, #000000);
+    color: var(--color-text-primary, $color-text-primary);
     text-decoration: none;
     font-weight: $font-weight-normal;
     font-size: $font-size-base;
@@ -61,11 +61,11 @@
     transition: color 0.2s ease-in-out;
 
     &:hover {
-      color: var(--color-primary, #003b49);
+      color: var(--color-primary, $color-brand-primary);
     }
 
     &.active {
-      color: var(--color-primary, #003b49);
+      color: var(--color-primary, $color-brand-primary);
       font-weight: $font-weight-semibold;
 
       &::after {
@@ -75,8 +75,64 @@
         left: 0;
         right: 0;
         height: 2px;
-        background-color: var(--color-primary, #003b49);
+        background-color: var(--color-primary, $color-brand-primary);
       }
+    }
+  }
+}
+
+// Auth section styles
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-name {
+  color: var(--color-text-primary, $color-text-primary);
+  font-size: 0.9rem;
+  font-weight: $font-weight-medium;
+  font-family: var(--font-family);
+}
+
+.auth-button {
+  background: var(--color-primary, $color-brand-primary);
+  color: $color-white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: var(--color-primary-dark, $color-brand-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--color-shadow, $color-shadow);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.logout {
+    background: var(--color-background-tertiary, $color-background-tertiary);
+    color: var(--color-text-primary, $color-text-primary);
+    border: 1px solid var(--color-border, $color-border);
+
+    &:hover {
+      background: var(--color-background-secondary, $color-background-secondary);
+      border-color: var(--color-primary, $color-brand-primary);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px var(--color-shadow, $color-shadow);
     }
   }
 }
@@ -87,11 +143,11 @@
 }
 
 .theme-button {
-  background: var(--color-background-tertiary, white);
-  border: 1px solid var(--color-border, #e9ecef);
+  background: var(--color-background-tertiary, $color-background-tertiary);
+  border: 1px solid var(--color-border, $color-border);
   border-radius: 8px;
   padding: 0.5rem 1rem;
-  color: var(--color-text-primary, #000000);
+  color: var(--color-text-primary, $color-text-primary);
   font-family: var(--font-family);
   font-size: 0.9rem;
   cursor: pointer;
@@ -101,8 +157,8 @@
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background: var(--color-background-secondary, #f8f9fa);
-    border-color: var(--color-primary, #003b49);
+    background: var(--color-background-secondary, $color-background-secondary);
+    border-color: var(--color-primary, $color-brand-primary);
   }
 
   .dropdown-arrow {
@@ -120,10 +176,10 @@
   top: 100%;
   right: 0;
   min-width: 200px;
-  background: var(--color-background-primary, white);
-  border: 1px solid var(--color-border, #e9ecef);
+  background: var(--color-background-primary, $color-background-primary);
+  border: 1px solid var(--color-border, $color-border);
   border-radius: 8px;
-  box-shadow: 0 4px 12px var(--color-shadow, rgba(0, 0, 0, 0.1));
+  box-shadow: 0 4px 12px var(--color-shadow, $color-shadow);
   z-index: 1001;
   margin-top: 0.5rem;
   overflow: hidden;
@@ -137,18 +193,18 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--color-text-primary, #000000);
+  color: var(--color-text-primary, $color-text-primary);
   font-family: var(--font-family);
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background: var(--color-background-secondary, #f8f9fa);
+    background: var(--color-background-secondary, $color-background-secondary);
   }
 
   &.active {
-    background: var(--color-primary, #003b49);
-    color: white;
+    background: var(--color-primary, $color-brand-primary);
+    color: $color-white;
   }
 
   .check-mark {
@@ -161,18 +217,18 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  border: 1px solid var(--color-border, #e9ecef);
+  border: 1px solid var(--color-border, $color-border);
 
-  &[data-theme="professional"] {
-    background: linear-gradient(45deg, #003b49 50%, #76a239 50%);
+  &[data-theme='professional'] {
+    background: linear-gradient(45deg, $color-brand-primary 50%, $color-brand-secondary 50%);
   }
 
-  &[data-theme="dark"] {
+  &[data-theme='dark'] {
     background: linear-gradient(45deg, #4a90e2 50%, #121212 50%);
   }
 
-  &[data-theme="colorful"] {
-    background: linear-gradient(45deg, #607b8c 50%, #ffffff 50%);
+  &[data-theme='colorful'] {
+    background: linear-gradient(45deg, $color-nextech-bg 50%, $color-white 50%);
   }
 }
 
@@ -183,5 +239,5 @@
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  background-color: var(--color-background-primary, white);
+  background-color: var(--color-background-primary, $color-background-primary);
 }
