@@ -1,23 +1,15 @@
 <nav class="main-nav">
   <div class="nav-content">
-    <a routerLink="/" class="nav-brand">My Sample App</a>
-    <div class="nav-right">
+    <div class="nav-left">
+      <a routerLink="/" class="nav-brand">My Sample App</a>
+    </div>
+    <div class="nav-center">
       <ul class="nav-links">
         <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
         <li><a routerLink="/news" routerLinkActive="active">Hacker News</a></li>
       </ul>
-      @if (isAuthEnabled) {
-        <div class="auth-section">
-          @if (isAuthenticated$ | async) {
-            <div class="user-info">
-              <span class="user-name">{{ (user$ | async)?.name || (user$ | async)?.email }}</span>
-              <button class="auth-button logout" (click)="logout()">Logout</button>
-            </div>
-          } @else {
-            <button class="auth-button login" (click)="login()">Login</button>
-          }
-        </div>
-      }
+    </div>
+    <div class="nav-right">
       <div class="theme-selector">
         <button
           class="theme-button"
@@ -46,6 +38,48 @@
           </div>
         }
       </div>
+      @if (isAuthEnabled) {
+        <div class="auth-section">
+          @if (isAuthenticated$ | async) {
+            <div class="user-menu">
+              <button
+                class="user-avatar-button"
+                (click)="toggleUserMenu($event)"
+                [attr.aria-expanded]="showUserMenu()"
+                aria-label="User menu"
+              >
+                <img
+                  [src]="(user$ | async)?.picture"
+                  [alt]="(user$ | async)?.name || 'User avatar'"
+                  class="user-avatar"
+                />
+              </button>
+              @if (showUserMenu()) {
+                <div class="user-dropdown">
+                  <div class="user-dropdown-header">
+                    <img
+                      [src]="(user$ | async)?.picture"
+                      [alt]="(user$ | async)?.name || 'User avatar'"
+                      class="user-avatar-large"
+                    />
+                    <div class="user-details">
+                      <div class="user-dropdown-name">{{ (user$ | async)?.name }}</div>
+                      <div class="user-dropdown-email">{{ (user$ | async)?.email }}</div>
+                    </div>
+                  </div>
+                  <div class="user-dropdown-divider"></div>
+                  <button class="user-dropdown-action" (click)="logout()">
+                    <span class="action-icon">🚪</span>
+                    Logout
+                  </button>
+                </div>
+              }
+            </div>
+          } @else {
+            <button class="auth-button login" (click)="login()">Login</button>
+          }
+        </div>
+      }
     </div>
   </div>
 </nav>

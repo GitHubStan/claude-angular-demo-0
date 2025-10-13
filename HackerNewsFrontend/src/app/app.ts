@@ -14,6 +14,7 @@ import { AuthService } from './services/auth.service';
 export class App {
   protected readonly title = signal('my-sample-app');
   protected readonly showThemeDropdown = signal(false);
+  protected readonly showUserMenu = signal(false);
   protected readonly themeService = inject(ThemeService);
   protected readonly authService = inject(AuthService);
   protected readonly themes = this.themeService.getThemes();
@@ -48,11 +49,28 @@ export class App {
     this.closeThemeDropdown();
   }
 
+  // Toggle user menu visibility
+  toggleUserMenu(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    this.showUserMenu.update(show => !show);
+  }
+
+  // Close user menu
+  closeUserMenu(): void {
+    this.showUserMenu.set(false);
+  }
+
   // Close dropdown when clicking outside
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     if (this.showThemeDropdown()) {
       this.closeThemeDropdown();
+    }
+    if (this.showUserMenu()) {
+      this.closeUserMenu();
     }
   }
 
